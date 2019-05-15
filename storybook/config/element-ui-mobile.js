@@ -28,6 +28,8 @@ Vue.use(Box);
 import Select from "@websanova/element-ui-mobile/packages/select";
 Vue.use(Select);
 
-import _UI from "@/packages/ui-manager/UI";
-
-export const UI = (Vue.prototype.$UI = new _UI());
+export {
+    default as UI,
+} from "@websanova/element-ui-mobile/packages/ui-manager/UI";
+import UI from "@websanova/element-ui-mobile/packages/ui-manager/UI";
+Vue.prototype.$UI = UI;

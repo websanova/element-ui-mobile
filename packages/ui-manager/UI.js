@@ -1,12 +1,12 @@
 /**
  * Exposes an API for working with common UI functionalities.
  */
-export default class UI {
+export default {
     /**
      * Instance of a UIManager component
      * Make sure this is set before calling the UI functions below.
      */
-    manager = undefined;
+    manager: undefined,
 
     /**
      * Show alert dialog
@@ -19,7 +19,7 @@ export default class UI {
     alert(message, title, options) {
         return this.manager.overlayDialogs.alert(message, title, options);
         // return this.manager.alert(message, title, options);
-    }
+    },
 
     /**
      * Show confirmation dialog
@@ -32,7 +32,7 @@ export default class UI {
      */
     confirm(message, title, options) {
         return this.manager.overlayDialogs.confirm(message, title, options);
-    }
+    },
 
     /**
      * Show warning dialog
@@ -44,7 +44,7 @@ export default class UI {
      */
     warn(message, title, options) {
         return this.manager.overlayDialogs.warn(message, title, options);
-    }
+    },
 
     /**
      * Show error dialog
@@ -56,15 +56,15 @@ export default class UI {
      */
     error(message, title, options) {
         return this.manager.overlayDialogs.error(message, title, options);
-    }
+    },
 
     close() {
         return this.manager.dialogs.close();
-    }
+    },
 
     overlayClose() {
         return this.manager.overlayDialogs.close();
-    }
+    },
 
     /**
      * Show custom dialog
@@ -76,11 +76,11 @@ export default class UI {
      */
     dialog(message, options) {
         return this.manager.dialogs.dialog(message, options);
-    }
+    },
 
     dialogForm(message, options) {
         return this.manager.dialogs.dialogForm(message, options);
-    }
+    },
 
     messageSuccess(message, options) {
         options = options || {};
@@ -88,7 +88,7 @@ export default class UI {
         options.message = message;
         // return this.manager.messages.success(message);
         return this.manager.message(options);
-    }
+    },
 
     messageWarning(message, options) {
         options = options || {};
@@ -96,7 +96,7 @@ export default class UI {
         options.message = message;
         // return this.manager.messages.warning(message);
         return this.manager.message(options);
-    }
+    },
 
     messageError(message, options) {
         options = options || {};
@@ -104,14 +104,14 @@ export default class UI {
         options.type = "error";
         options.message = message;
         return this.manager.message(options);
-    }
+    },
 
     message(message, options) {
         options = options || {};
         // return this.manager.messages.message(message);
         options.message = message;
         return this.manager.message(options);
-    }
+    },
 
     messageApiError(res, options) {
         const body = res.data || res.body;
@@ -133,9 +133,9 @@ export default class UI {
             return this.manager.messages.error(general.msg);
         }
         return false;
-    }
+    },
 
     notify(options) {
         return this.manager.notify(options);
-    }
-}
+    },
+};
