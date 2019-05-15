@@ -1,0 +1,72 @@
+.story a {
+    cursor: pointer;
+}
+
+.story code {
+    background: rgb(255, 192, 192);
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.story pre {
+    display: inline-block;
+}
+
+.story pre code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+.story-section-header {
+    font-size: 1.6em;
+    margin-bottom: 0.6em;
+}
+
+.icon-preview-panel {
+    width: 100px;
+    min-height: 40px;
+    display: block;
+    text-align: center;
+    border: 1px solid #aaa;
+    position: relative;
+
+    > main {
+        padding: 10px 10px;
+        .fa-icon {
+            width: auto;
+            height: 1em;
+            max-height: 100%;
+            flex-shrink: 0;
+            font-size: 24px;
+        }
+    }
+    > footer {
+        background: #ddd;
+        border-top: 1px solid #aaa;
+        padding: 5px 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    &__corner-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: #ccc;
+        padding: 4px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+}
+
+
+
+.story__subtitle {
+    display: block;
+    margin-bottom: .5em;
+    font-weight: bold;
+    font-size: 14px;
+}

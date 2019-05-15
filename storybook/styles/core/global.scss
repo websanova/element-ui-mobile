@@ -1,0 +1,54 @@
+html {
+    height: 100%;
+}
+
+body {
+    font-family: "Open+Sans", sans-serif;
+    /* font-size: 14px; */
+    height: 100%;
+    // background: $--body-background;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#root {
+    height: 100%;
+}
+
+.sb-show-main {
+    margin: 0;
+}
+
+#root {
+}
+
+.box-page {
+    padding: 20px;
+    height: 100%;
+}
+
+/*
+ * el-scrollbar
+ *
+ * https://github.com/ElemeFE/element/pull/13818
+ */
+
+.el-scrollbar--fix {
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.el-scrollbar--fix .el-scrollbar__wrap {
+    overflow-x: hidden;
+}
+
+.demo {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.map {
+    flex: 100% 1 1;
+}

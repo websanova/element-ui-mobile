@@ -1,0 +1,125 @@
+@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+@import "mixins/breakpoints.scss";
+
+/**
+ * el-multi-select
+ *
+ * A multi select list with checkboxes and search
+ */
+@include b(multi-select) {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    padding: 0;
+
+    > span {
+        max-width: 120px;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+
+    > svg {
+        position: relative;
+        top: 2px;
+        height: 11px;
+        margin-left: 3px;
+    }
+
+    @include e(header) {
+        flex-shrink: 0;
+        border-bottom: 1px solid #ccc;
+        padding-top: 5px;
+
+        > .el-input {
+            border-bottom: 1px solid #ccc;
+            input {
+                border: none;
+                height: 30px;
+                padding: 0 10px;
+            }
+        }
+    }
+
+    @include e(toolbar-spacer) {
+        flex: 1;
+    }
+
+    @include e(toolbar) {
+        display: flex;
+        flex-direction: row;
+        padding: 0 10px;
+        .el-button--text {
+            padding: 5px 0;
+            font-size: 12px;
+            color: #777777;
+
+            @include media("<desktop") {
+                font-size: 14px;
+                padding: 8px 0 7px;
+            }
+        }
+    }
+
+    @include e(notfound) {
+        text-align: center;
+        padding: 10px 10px;
+        height: 250px;
+    }
+
+    @include e(options) {
+        flex: 1;
+        // overflow: unset;
+        // overflow-y: auto;
+        // overflow-x: hidden;
+        margin: 0;
+        text-justify: none;
+        list-style: none;
+        padding: 0;
+        > li {
+            > label {
+                padding-right: 5px;
+                padding: 3px 10px;
+                margin: 0;
+                @include media("<desktop") {
+                    padding: 8px 10px;
+                }
+            }
+            > .el-checkbox {
+                width: 100%;
+            }
+            .el-checkbox__input {
+                margin-right: 3px;
+            }
+        }
+        .el-checkbox__input {
+            vertical-align: top;
+            position: relative;
+            top: 3px;
+        }
+        .el-checkbox__label {
+            white-space: normal;
+        }
+    }
+
+    .el-scrollbar {
+        @include media("<desktop") {
+            height: 100% !important;
+        }
+    }
+}
+
+/**
+ * a popover modifier to be used with multi-select
+ * it's a popover without padding and uses flexbox to size the inner elements
+ */
+@include b(popover) {
+    @include m(multi-select) {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+    }
+}

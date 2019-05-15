@@ -1,0 +1,65 @@
+
+
+.el-dialog--system {
+    width: auto;
+    min-width: 200px;
+    max-width: 400px;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+
+    > .el-dialog__header {
+        padding: 10px 10px 0px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    > .el-dialog__body {
+        padding: 10px 10px 10px;
+    }
+    > .el-dialog__footer {
+        padding: 0px 10px 10px;
+    }
+    
+}
+
+.dialog-manager__backdrop {
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+    background: rgba(0,0,0,.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    z-index: 3;
+
+    &--open {
+        opacity: 1;
+        
+    }
+}
+
+.dialog-manager-overlays__backdrop {
+
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+    background: rgba(0,0,0,.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    z-index: 10000;
+
+    &--open {
+        opacity: 1;
+        
+    }
+}
+
+.vue-portal-target--overlay {
+    z-index: 10001;
+    position: relative;
+}

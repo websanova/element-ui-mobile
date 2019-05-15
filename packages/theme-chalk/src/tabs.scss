@@ -1,0 +1,120 @@
+// https://github.com/ElemeFE/element/pull/12746#issuecomment-420890881
+// https://github.com/sunhaoxiang/element/blob/dev/packages/theme-chalk/src/drawer.scss
+
+@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+@import "mixins/breakpoints.scss";
+
+.el-tabs--ext {
+    display: flex;
+    height: 100%;
+    flex: 1;
+    flex-direction: column;
+
+    .el-tabs__header {
+        user-select: none;
+        margin-bottom: 0;
+        background: #fff;
+
+        @include when(top) {
+            display: flex;
+        }
+
+        .el-tabs__toolbar {
+            border-left: 1px solid #e4e7ed;
+        }
+
+        .el-tabs__new-tab {
+            width: 40px;
+            height: 100%;
+            margin: 0;
+
+            outline: none;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .el-iconbutton {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                align-content: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .el-tabs__content {
+        flex: 1;
+
+        .el-popover {
+            z-index: 8 !important;
+        }
+    }
+
+    .el-tabs__item {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .el-tabs__nav-wrap {
+        flex: 1;
+        display: flex;
+        @include when(scrollable) {
+            padding: 0 19px;
+        }
+    }
+    .el-tabs__nav-prev {
+        border-right: 1px solid #e4e7ed;
+        border-bottom: 1px solid #e4e7ed;
+        margin-right: -1px;
+        // position: static;
+        order: 1;
+        background: #fff;
+        z-index: 3;
+    }
+    .el-tabs__nav-scroll {
+        order: 2;
+        overflow: visible;
+        flex-shrink: 0;
+
+        // flex: 1;
+    }
+    .el-tabs__nav-next {
+        border-right: 1px solid #e4e7ed;
+        border-bottom: 1px solid #e4e7ed;
+        border-left: 1px solid #e4e7ed;
+        margin-left: -1px;
+        // position: static;
+        order: 3;
+        background: #fff;
+        z-index: 3;
+    }
+
+    .el-tab-pane {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        > .el-scrollbar {
+            height: 100%;
+        }
+
+        .el-tab-pane__body {
+            flex: 1;
+            // overflow: auto;
+            @include when(pad) {
+                padding: 5px 10px;
+            }
+        }
+
+        .el-tab-pane__footer {
+            @include m(pad) {
+                padding: 5px 10px;
+            }
+        }
+    }
+}

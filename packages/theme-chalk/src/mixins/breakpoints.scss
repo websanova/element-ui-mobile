@@ -1,0 +1,92 @@
+// https://github.com/eduardoboucas/include-media
+@import "~include-media/dist/include-media";
+
+$breakpoints: (
+    watch: 0px,
+    phone: 320px,
+    tablet: 600px,
+    tablet-landscape: 900px,
+    desktop: 1024px,
+    bigdesktop: 1800px,
+);
+
+$media-expressions: (
+    "watch": '(max-width: #{map-get($breakpoints, "phone")})',
+    "phone":
+        '(min-width: #{map-get($breakpoints, "phone")}) and (max-width: #{map-get($breakpoints, "tablet")})',
+    "tablet":
+        '(min-width: #{map-get($breakpoints, "tablet")}) and (max-width: #{map-get($breakpoints, "tablet-landscape")})',
+    // this covers phone portrait and landscape
+        "desktop":
+        '(min-width: #{map-get($breakpoints, "desktop")}) and (max-width: #{map-get($breakpoints, "bigdesktop")})',
+    "bigdesktop": '(min-width: #{map-get($breakpoints, "bigdesktop")})',
+    "screen": "screen",
+    "print": "print",
+    // https://css-tricks.com/touch-devices-not-judged-size/
+        "hover": "(hover: hover)",
+    "nohover": "(hover: none)",
+    "fpointer": "(pointer: fine)",
+    "cpointer": "(pointer: coarse)",
+    "nopointer": "(pointer: none)",
+    "handheld": "handheld",
+    "landscape": "(orientation: landscape)",
+    "portrait": "(orientation: portrait)",
+    "retina-2-x":
+        "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)",
+    "retina-3-x":
+        "(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi)",
+);
+
+/* Usage Examples
+
+// phone only
+@include media("phone") {
+  width: 35%;
+}
+
+// phone and up
+@include media(">phone") {
+  width: 35%;
+}
+
+// phone and tablet sizes
+@include media(">phone", "<desktop") {
+  width: 35%;
+}
+
+*/
+
+// all classes are wrapped inside the body for specificity
+body {
+
+    .hidden-phone {
+        @include media("<tablet") {
+            display: none;
+        }
+    }
+
+    .hidden-phone-and-up {
+        @include media(">=phone") {
+            display: none;
+        }
+    }
+
+    .hidden-tablet-and-up {
+        @include media(">=tablet") {
+            display: none;
+        }
+    }
+
+    .hidden-tablet-and-down {
+        @include media("<desktop") {
+            display: none;
+        }
+    }
+
+    .hidden-desktop-and-up {
+        @include media(">=desktop") {
+            display: none;
+        }
+    }
+
+}

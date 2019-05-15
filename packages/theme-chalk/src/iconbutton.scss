@@ -1,0 +1,78 @@
+@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+// @import "var";
+
+@include b(iconbutton) {
+    cursor: pointer;
+    display: inline-block;
+    color: #bbb;
+    position: relative;
+    transition: color 300ms ease;
+    display: inline-flex;
+
+    // background: #f2f2f2;
+    border-radius: 50%;
+    padding: 5px;
+
+    // make sure svg icons are squared
+    > svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        color: #000;
+        &::after {
+            content: attr(hover-title);
+            vertical-align: top;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 5px;
+            white-space: nowrap;
+        }
+    }
+
+    > span {
+        display: none;
+        position: absolute;
+    }
+
+    @include when(start) {
+        align-items: flex-start;
+    }
+    @include when(end) {
+        align-items: flex-end;
+    }
+    @include when(center) {
+        align-items: center;
+    }
+
+    @include m(medium) {
+        padding: 5px;
+        > svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    @include m(small) {
+        padding: 5px;
+        > svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    @include m(mini) {
+        padding: 5px;
+        > svg {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    @include m(nopad) {
+        padding: 0px;
+    }
+}

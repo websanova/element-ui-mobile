@@ -1,0 +1,9 @@
+@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+@import "~element-ui/packages/theme-chalk/src/common/var";
+
+@include b(button) {
+    > span > svg {
+        width: 16px;
+        height: 16px;
+    }
+}

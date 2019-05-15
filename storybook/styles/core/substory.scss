@@ -1,0 +1,56 @@
+
+.storybook-substory {
+    box-shadow: 0 10px 40px 0 rgba(62,57,107,.07), 0 2px 9px 0 rgba(62,57,107,.06);
+    background: #fff;
+    margin-bottom: 1.5em;
+
+    > header {
+        padding: .5em 1em .4em;
+        background: #ddd;
+        border-bottom: 1px solid #ccc;
+    }
+
+    > main {
+        padding: 1em;
+    }
+
+    &__toolbar {
+        text-align: right;
+        margin-right: 5px;
+        user-select: none;
+        > a {
+            display: inline-flex;
+            align-items: center;
+            font-size: 12px;
+            padding: 5px;
+            cursor: pointer;
+            &.open {
+                i.arrow-down {
+                    transform: rotate(180deg);
+                }
+            }
+            > span {
+                margin-right: 3px;
+            }
+            * {
+                vertical-align: middle;
+            }
+        }
+        i.arrow-down {
+            transition: transform 300ms ease-out;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+
+            border-top: 6px solid #000;
+        }
+    }
+
+
+    &__title {
+        font-weight: bold;
+        font-size: 16px;
+        display: block;
+    }
+}

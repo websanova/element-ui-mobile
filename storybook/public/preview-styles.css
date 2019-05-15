@@ -1,0 +1,52 @@
+/**
+Styles to be used inside the preview panel of storybook
+*/
+
+body {
+  /* font-family: 'Roboto', sans-serif; */
+  /* font-size: 14px; */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  /* margin: 10px; */
+}
+
+body {
+  /* margin: 15px; */
+  /* margin: 0; */
+}
+
+
+.story a {
+  cursor: pointer;
+}
+
+.story code {
+  background: rgb(255, 192, 192);
+  padding: 2px;
+  border-radius: 2px;
+}
+
+.story pre {
+  display: inline-block;
+}
+
+.story pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/** fix text overflow in the table used by addons-info */
+*[class^='css-glamorous-table'] * {
+  white-space: normal !important;
+}
+
+.story-section-header {
+  font-size: 1.6em;
+  margin-bottom: .6em;
+}

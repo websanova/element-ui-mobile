@@ -1,0 +1,37 @@
+@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+@import "~element-ui/packages/theme-chalk/src/common/var";
+
+@include b(box) {
+    @include when(flex1) {
+        flex: 1;
+    }
+
+    @include when(flexbox) {
+        display: flex;
+    }
+
+    @include when(vertical) {
+        flex-direction: column;
+    }
+
+    @include when(start) {
+        align-items: start;
+    }
+
+    @include when(center) {
+        align-items: center;
+    }
+
+    @include when(end) {
+        align-items: flex-end;
+    }
+
+    @include when(spacing) {
+        > * {
+            margin-right: 1em;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+@keyframes barberpole {
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+.el-button.is-loading {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        $--color-white,
+        $--color-white 10px,
+        darken($--color-white, 15%) 10px,
+        darken($--color-white, 15%) 20px
+    );
+    background-size: 200% 200%;
+    animation: barberpole 2s linear infinite;
+}
+
+.el-button--primary.is-loading {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        $--color-primary,
+        $--color-primary 10px,
+        darken($--color-primary, 15%) 10px,
+        darken($--color-primary, 15%) 20px
+    );
+}
+
+.el-button--success.is-loading {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        $--color-success,
+        $--color-success 10px,
+        darken($--color-success, 15%) 10px,
+        darken($--color-success, 15%) 20px
+    );
+}
+
+.el-button--info.is-loading {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        $--color-info,
+        $--color-info 10px,
+        darken($--color-info, 15%) 10px,
+        darken($--color-info, 15%) 20px
+    );
+}
+
+.el-button--warning.is-loading {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        $--color-warning,
+        $--color-warning 10px,
+        darken($--color-warning, 15%) 10px,
+        darken($--color-warning, 15%) 20px
+    );
+}
+
+.el-button--danger.is-loading {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        $--color-danger,
+        $--color-danger 10px,
+        darken($--color-danger, 15%) 10px,
+        darken($--color-danger, 15%) 20px
+    );
+}
+
+.el-button--wide {
+    display: block;
+    width: 100%;
+}

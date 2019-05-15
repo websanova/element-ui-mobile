@@ -1,0 +1,61 @@
+@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+// @import "var";
+
+@include b(container) {
+    display: flex;
+    flex-direction: row;
+    flex-basis: auto;
+    box-sizing: border-box;
+    min-width: 0;
+
+    @include when(flex1) {
+        flex: 1;
+    }
+
+    @include when(vertical) {
+        flex-direction: column;
+    }
+
+    @include when(start) {
+        align-items: start;
+    }
+
+    @include when(center) {
+        align-items: center;
+    }
+
+    @include when(end) {
+        align-items: flex-end;
+    }
+
+    @include when(reverse) {
+        flex-direction: row-reverse;
+        @include when(vertical) {
+            flex-direction: column-reverse;
+        }
+    }
+
+    @include when(wrap) {
+        flex-wrap: wrap;
+        @include when(reverse) {
+            flex-wrap: wrap-reverse;
+        }
+    }
+
+    @include when(scroll) {
+        overflow: auto;
+    }
+    @include when(scrollX) {
+        overflow-x: auto;
+    }
+    @include when(scrollY) {
+        overflow-y: auto;
+    }
+
+    @include when(noshrink) {
+        flex-shrink: 0;
+    }
+    @include when(nogrow) {
+        flex-grow: 0;
+    }
+}

@@ -1,0 +1,79 @@
+// .el-dialog__body > .el-form > .el-form-item:last-child {
+//     margin-bottom: 0px;
+// }
+
+@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+@import "./mixins/breakpoints";
+
+@include b(dialog) {
+    margin: 0 auto;
+
+    .el-dialog__close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+
+    @include m(full-phone) {
+        display: flex;
+        flex-direction: column;
+
+        .el-dialog__body {
+            // the body should take the remaining space
+            flex: 1;
+        }
+
+        // full sizes dialogs for touch devices smaller than desktop
+        @include media("<desktop") {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+            height: 100%;
+            margin: 0 !important;
+
+            .el-dialog__headerbtn {
+                font-size: 18px;
+                .el-dialog__close {
+                }
+            }
+
+            .el-dialog__close {
+                right: 5px;
+                top: 5px;
+                > svg {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+        }
+    }
+
+    @include e(header) {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    @include e(body) {
+        padding: 10px 20px;
+    }
+
+    // a dialog footer which normally holds buttons
+    @include e(footer) {
+        padding: 0px 20px 15px;
+    }
+}
+
+.el-dialog__wrapper {
+    align-items: center;
+    height: 100%;
+    display: flex;
+
+    &--flex {
+        display: flex;
+        align-items: center;
+    }
+}
+
+body.has-overlay {
+    overflow: hidden;
+}

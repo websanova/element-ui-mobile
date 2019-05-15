@@ -1,0 +1,19 @@
+
+.el-code-view {
+    word-break: break-all;
+    white-space: pre-wrap;
+    background: #eee;
+    border: 1px solid #aaa;
+    padding: 10px;
+}
+
+.CodeMirror__wrapper--autoheight {
+    .CodeMirror {
+        height: auto;
+        overflow: hidden;
+    }
+
+    .CodeMirror-vscrollbar {
+        display: none !important;
+    }
+}

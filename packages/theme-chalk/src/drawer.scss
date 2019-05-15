@@ -1,0 +1,227 @@
+// https://github.com/ElemeFE/element/pull/12746#issuecomment-420890881
+// https://github.com/sunhaoxiang/element/blob/dev/packages/theme-chalk/src/drawer.scss
+
+@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+@import "~element-ui/packages/theme-chalk/src/mixins/utils";
+@import "~element-ui/packages/theme-chalk/src/common/var";
+@import "~element-ui/packages/theme-chalk/src/common/popup";
+@import "mixins/breakpoints.scss";
+
+$--drawer-font-size: 1em;
+$--drawer-title-font-size: 1.4em;
+$--drawer-line-height: inherit;
+$--drawer-box-shadow: $--box-shadow-dark;
+$--drawer-padding-primary: 15px 20px 20px;
+
+@include b(drawer) {
+    position: relative;
+    margin: 0;
+    background: $--color-white;
+    box-shadow: $--drawer-box-shadow;
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    @include m(placementleft) {
+        left: 0;
+    }
+
+    @include m(placementright) {
+        right: 0;
+    }
+
+    @include e(wrapper) {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        margin: 0;
+        display: flex;
+
+        @include m(placementleft) {
+            justify-content: flex-start;
+        }
+
+        @include m(placementright) {
+            justify-content: flex-end;
+        }
+    }
+
+    @include e(header) {
+        padding: $--drawer-padding-primary;
+        padding-bottom: 10px;
+    }
+
+    @include e(headerbtn) {
+        position: absolute;
+        top: 7px;
+        right: 7px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: $--message-close-size;
+        z-index: 1;
+
+        @include e(close) {
+            color: $--color-info;
+        }
+
+        &:focus,
+        &:hover {
+            @include e(close) {
+                color: $--color-primary;
+            }
+        }
+    }
+
+    @include e(title) {
+        line-height: $--drawer-line-height;
+        font-size: $--drawer-title-font-size;
+        color: $--color-text-primary;
+    }
+
+    @include e(body) {
+        padding: 30px 20px;
+        color: $--color-text-regular;
+        font-size: $--drawer-font-size;
+        flex: 1;
+        overflow: auto;
+    }
+
+    @include e(footer) {
+        padding: 10px;
+        width: 100%;
+        text-align: right;
+        box-sizing: border-box;
+    }
+
+    // 内容居中布局
+    @include m(center) {
+        text-align: center;
+
+        @include e(body) {
+            text-align: initial;
+            padding: 25px ($--drawer-padding-primary + 5px) 30px;
+        }
+
+        @include e(footer) {
+            text-align: inherit;
+        }
+    }
+
+    @include m(full-phone) {
+        > .el-drawer {
+            @include media("<tablet") {
+                width: 100% !important;
+            }
+        }
+    }
+
+    @include m(full-tablet) {
+        > .el-drawer {
+            @include media("<desktop") {
+                width: 100% !important;
+            }
+        }
+    }
+
+    /*@include m(full-xs) {
+        @include b(drawer) {
+            // full sizes drawers for mobile
+            @include media(">desktop") {
+                @include e(headerbtn) {
+                    top: 10px;
+                    right: 10px;
+                }
+            }
+            @include media("<desktop") {
+                width: 100% !important;
+
+                @include e(headerbtn) {
+                    top: 5px;
+                    right: 5px;
+                    > .el-iconbutton {
+                        > svg {
+                            width: 28px;
+                            height: 28px;
+                        }
+                    }
+                }
+            }
+        }
+    }*/
+}
+
+.drawer-move-left-enter-active {
+    animation: drawer-move-left-in 0.5s ease-out;
+}
+
+.drawer-move-left-leave-active {
+    animation: drawer-move-left-out 0.5s ease-in;
+}
+
+.drawer-move-right-enter-active {
+    animation: drawer-move-right-in 0.5s ease-out;
+}
+
+.drawer-move-right-leave-active {
+    animation: drawer-move-right-out 0.5s ease-in;
+}
+
+@keyframes drawer-move-left-in {
+    0% {
+        transform-origin: 0 0;
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform-origin: 0 0;
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes drawer-move-left-out {
+    0% {
+        transform-origin: 0 0;
+        transform: translateX(0%);
+        opacity: 1;
+    }
+    100% {
+        transform-origin: 0 0;
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes drawer-move-right-in {
+    0% {
+        transform-origin: 0 0;
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform-origin: 0 0;
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes drawer-move-right-out {
+    0% {
+        transform-origin: 0 0;
+        transform: translateX(0%);
+        opacity: 1;
+    }
+    100% {
+        transform-origin: 0 0;
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}

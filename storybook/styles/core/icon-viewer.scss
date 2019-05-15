@@ -1,0 +1,17 @@
+.icon-viewer {
+    display: flex;
+    flex-direction: column;
+
+    > header {
+        background: #666;
+        padding: 10px;
+    }
+
+    .flex-grid {
+        display: flex;
+        flex-wrap: wrap;
+        > * {
+            padding: 5px;
+        }
+    }
+}
