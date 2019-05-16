@@ -129,10 +129,12 @@ export default {
         ];
 
         let general = errors.find(err => err.field === "general");
-        if (general) {
-            return this.manager.messages.error(general.msg);
-        }
-        return false;
+        let msg = general ? general.msg : errors[0].msg;
+
+        return this.manager.message({
+            type: "error",
+            message: msg,
+        });
     },
 
     notify(options) {

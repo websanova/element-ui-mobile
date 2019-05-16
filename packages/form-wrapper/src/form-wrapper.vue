@@ -26,7 +26,12 @@
             labelWidth: {
                 type: String,
                 default: "0px"
-            }
+            },
+            hideRequiredAsterisk: {
+                type: Boolean,
+                default: true
+            },
+            skipHttp: Boolean
         },
 
         created() {
@@ -60,40 +65,57 @@
                 this.form.loading = false;
 
                 if (this.form.clear === true) {
+                    // this.$refs.form.resetFields();
+                    this.reset();
                     this.form.body = {};
                 }
 
                 if (this.form.msg && res.data.msg) {
-                    this.$store.dispatch("messages/info", res.data.msg);
+                    this.UI.message({
+                        type: "info",
+                        message: res.data.msg
+                    });
                 }
 
                 this.form.errors = {};
-
                 // update initial form values
-                this.$refs.form.updateFields();
+                if (this.$refs.form) this.$refs.form.updateFields();
+
+                this.syncState();
+
+                this.$emit("success", res, this.form);
             };
 
             this.form.error = res => {
+                const body = res.data || res.body;
+                if (!body) {
+                    console.error(res);
+                    return;
+                }
                 this.form.status = "error";
                 this.form.loading = false;
 
                 this.setErrors(
-                    res.data.errors || [
-                        { field: "general", msg: res.data.msg || res.data.message },
-                        {
-                            field: res.data.code,
-                            msg: res.data.msg || res.data.message
-                        }
+                    body.errors || [
+                        { field: "general", msg: body.msg || body.message }
                     ]
                 );
 
-                if (this.form.msg && res.data.msg) {
-                    this.$store.dispatch("messages/error", res.data.msg);
+                if (this.form.msg && body.msg) {
+                    this.UI.message({
+                        type: "error",
+                        message: body.msg
+                    });
                 }
+                this.$emit("error", res, this.form);
             };
-        },
+            this.form.clear = res => {
+                this.form.status = null;
+                this.setErrors([]);
+            };
 
-        mounted() {},
+            this.$emit("created", this.form);
+        },
 
         computed: {
             dirty() {
@@ -134,21 +156,52 @@
                 this.form.loading = true;
 
                 this.$emit("submit", this.form);
+
+                if (this.form.url && !this.skipHttp) {
+                    this.$http(this.form).then(
+                        res => {
+                            this.form.success(res, this.form);
+                        },
+                        res => {
+                            this.form.error(res, this.form);
+                        }
+                    );
+                } else {
+                    this.form.success(null, this.form);
+                }
             },
 
             reset(data) {
                 data = data || {};
 
                 // reset form field and body
-                this.$refs.form.resetFields();
+                if (this.$refs.form) {
+                    this.$refs.form.resetFields();
+                    // this.$refs.form.clearValidate();
+                }
+
+                if (data.body) this.form.body = data.body;
+                if (data.method) this.form.method = data.method;
+                if (data.url) this.form.url = data.url;
 
                 // reset values used for server side validation
                 this.form.status = data.status || null;
                 this.form.errors = data.errors || {};
                 this.form.loading = false;
-                this.form.dirty = false;
-                this.form.pristine = true;
-                this.form.hasValidationError = false;
+
+                setTimeout(() => {
+                    if (this.$refs.form) {
+                        this.$refs.form.clearValidate();
+                    }
+                }, 1);
+
+                this.syncState();
+            },
+
+            syncState() {
+                this.form.dirty = this.dirty;
+                this.form.pristine = !this.dirty;
+                this.form.hasValidationError = this.hasValidationError;
             },
 
             setErrors(validationErrors) {

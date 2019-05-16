@@ -2,6 +2,10 @@
     <el-form-wrapper
         :form="form"
         @change="onFormChange"
+        @created="onFormCreated"
+        @submit="onFormSubmit"
+        @success="onFormSuccess"
+        @error="onFormError"
         v-bind="$attrs"
     >
         <el-form-item
@@ -122,27 +126,19 @@
         },
         toggle: {
             module: "el-switch",
-            attrs: {
-                label: "test"
-            }
+            attrs: {}
         },
         range: {
             module: "el-slider",
-            attrs: {
-                label: "test"
-            }
+            attrs: {}
         },
         radio: {
             module: "el-radio",
-            attrs: {
-                label: "test"
-            }
+            attrs: {}
         },
         option: {
             module: "el-select",
-            attrs: {
-                label: "test"
-            }
+            attrs: {}
         }
     };
 
@@ -151,6 +147,7 @@
         components: { ElFormWrapper },
         props: {
             fields: Array,
+            components: Object,
             form: {
                 type: Object,
                 default() {
@@ -163,7 +160,11 @@
         },
         data() {
             return {
-                componentsByType
+                componentsByType: Object.assign(
+                    {},
+                    componentsByType,
+                    this.components || {}
+                )
             };
         },
         watch: {
@@ -177,7 +178,20 @@
                 return this.form.body;
             }
         },
+
         methods: {
+            onFormCreated() {
+                this.$emit("created", this.form);
+            },
+            onFormSubmit(form) {
+                this.$emit("submit", form);
+            },
+            onFormSuccess(err, form) {
+                this.$emit("success", err, form);
+            },
+            onFormError(err, form) {
+                this.$emit("error", err, form);
+            },
             onFormChange(form, prop, value) {
                 const field = this.fields.find(f => f.prop === prop);
                 if (!field) {
@@ -188,28 +202,29 @@
             onChange(field, value) {
                 const body = Object.assign({}, this.form.body);
 
-                /*if (field.type === "integer") {
-                                value = parseInt(value, 10);
-                            }*/
+                // if (field.type === "integer") {
+                //     value = parseInt(value, 10);
+                // }
 
                 body[field.prop] = value;
                 this.form.body = body;
                 this.$emit("change", this.form, field, value);
             },
             componentFromType(type) {
-                return componentsByType[type];
+                return this.componentsByType[type];
             },
             componentAttrs(field) {
                 if (!field.type) {
                     console.error(`missing field type`, field);
                 }
-                if (!componentsByType[field.type]) {
-                    throw new Error(`field of type "${field.type}"`);
+                if (!this.componentsByType[field.type]) {
+                    throw new Error(`field of type "${field.type}" not found`);
                 }
 
                 const attrs = Object.assign(
                     {},
-                    componentsByType[field.type].attrs || {}
+                    (this.componentsByType[field.type] || {}).attrs || {},
+                    field.attrs || {}
                 );
 
                 if (field.placeholder) attrs.placeholder = field.placeholder;

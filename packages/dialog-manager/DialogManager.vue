@@ -178,10 +178,7 @@
                                         </div>
                                     )}
                                     {opts.cancel && (
-                                        <el-button
-                                            loading={this.form && this.form.loading}
-                                            on-click={this.handleClose}
-                                        >
+                                        <el-button on-click={this.handleClose}>
                                             {opts.cancelText || "Cancel"}
                                         </el-button>
                                     )}
@@ -209,9 +206,9 @@
                     title: title || "Alert",
                     class: "el-dialog__wrapper el-dialog__wrapper--flex",
                     customClass: `
-                            el-dialog--system
-                            el-dialog--alert
-                        `,
+                                                            el-dialog--system
+                                                            el-dialog--alert
+                                                        `,
                     queue: true,
                     enterToClose: true,
                     showClose: false,
@@ -292,10 +289,12 @@
                 }
             },
             handleFormCreated(form) {
+                console.log("handleFormCreated", form);
                 this.form = form;
                 this.formCreated = true;
             },
             handleFormSubmit(form) {
+                console.log("handleFormSubmit", form);
                 this.formError = false;
                 this.formSuccess = false;
 
@@ -396,9 +395,8 @@
                                     props: dialog.props || {}
                                 };
 
-                                if (dialog.form) {
-                                    attrs.props.formData = dialog.form;
-                                }
+                                if (dialog.form) attrs.props.form = dialog.form;
+
                                 message = this.$createElement(message, attrs);
                             } else {
                                 message = this.$createElement(message);
