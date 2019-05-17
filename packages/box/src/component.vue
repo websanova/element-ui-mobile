@@ -3,9 +3,12 @@
         class="el-box"
         :class="{
             ['el-box--' + (this.size || 'full')]: true,
-            'is-start': vAlign === 'start',
-            'is-center': vAlign === 'center',
-            'is-end': vAlign === 'end',
+            'is-center': align === 'center',
+            'is-right': align === 'right',
+            'is-vstart': vAlign === 'start',
+            'is-vcenter': vAlign === 'center',
+            'is-vend': vAlign === 'end',
+            'el-box--pad': pad,
             'is-spacing': spacing,
             'is-flexbox': flexbox,
             'is-reverse': reverse,
@@ -40,11 +43,16 @@
                 default: null
             },
 
+            align: {
+                type: String,
+                default: ""
+            },
             vAlign: {
                 type: String,
                 default: ""
             },
 
+            pad: Boolean,
             spacing: Boolean,
             flexbox: Boolean,
             reverse: Boolean,

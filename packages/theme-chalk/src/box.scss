@@ -2,6 +2,10 @@
 @import "~element-ui/packages/theme-chalk/src/common/var";
 
 @include b(box) {
+    @include m(pad) {
+        padding: 20px;
+    }
+
     @include when(flex1) {
         flex: 1;
     }
@@ -14,16 +18,24 @@
         flex-direction: column;
     }
 
-    @include when(start) {
+    @include when(vstart) {
         align-items: start;
     }
 
-    @include when(center) {
+    @include when(vcenter) {
         align-items: center;
     }
 
-    @include when(end) {
+    @include when(vend) {
         align-items: flex-end;
+    }
+
+    @include when(center) {
+        justify-content: center;
+        margin: 0 auto;
+    }
+    @include when(right) {
+        justify-content: right;
     }
 
     @include when(spacing) {
