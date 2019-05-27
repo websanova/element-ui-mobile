@@ -55,38 +55,3 @@ $media-expressions: (
 }
 
 */
-
-// all classes are wrapped inside the body for specificity
-body {
-
-    .hidden-phone {
-        @include media("<tablet") {
-            display: none;
-        }
-    }
-
-    .hidden-phone-and-up {
-        @include media(">=phone") {
-            display: none;
-        }
-    }
-
-    .hidden-tablet-and-up {
-        @include media(">=tablet") {
-            display: none;
-        }
-    }
-
-    .hidden-tablet-and-down {
-        @include media("<desktop") {
-            display: none;
-        }
-    }
-
-    .hidden-desktop-and-up {
-        @include media(">=desktop") {
-            display: none;
-        }
-    }
-
-}
