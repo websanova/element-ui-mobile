@@ -206,9 +206,9 @@
                     title: title || "Alert",
                     class: "el-dialog__wrapper el-dialog__wrapper--flex",
                     customClass: `
-                                                            el-dialog--system
-                                                            el-dialog--alert
-                                                        `,
+                        el-dialog--system
+                        el-dialog--alert
+                    `,
                     queue: true,
                     enterToClose: true,
                     showClose: false,
@@ -399,7 +399,11 @@
 
                                 message = this.$createElement(message, attrs);
                             } else {
-                                message = this.$createElement(message);
+                                const attrs = {
+                                    props: dialog.props || {}
+                                };
+
+                                message = this.$createElement(message, attrs);
                             }
                         }
                     }
