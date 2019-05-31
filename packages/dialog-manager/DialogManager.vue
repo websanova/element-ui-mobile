@@ -206,9 +206,9 @@
                     title: title || "Alert",
                     class: "el-dialog__wrapper el-dialog__wrapper--flex",
                     customClass: `
-                        el-dialog--system
-                        el-dialog--alert
-                    `,
+                                                    el-dialog--system
+                                                    el-dialog--alert
+                                                `,
                     queue: true,
                     enterToClose: true,
                     showClose: false,
@@ -289,22 +289,21 @@
                 }
             },
             handleFormCreated(form) {
-                console.log("handleFormCreated", form);
                 this.form = form;
                 this.formCreated = true;
             },
             handleFormSubmit(form) {
-                console.log("handleFormSubmit", form);
                 this.formError = false;
                 this.formSuccess = false;
 
-                if (this.currentDialog.onSubmit) this.currentDialog.onSubmit(form);
-                this.formLoading = true;
+                // if (this.currentDialog.onSubmit) this.currentDialog.onSubmit(form);
+                // this.formLoading = true;
             },
             handleFormSuccess(res, form, data) {
                 this.formSuccess = true;
-                if (this.currentDialog.onSuccess)
+                if (this.currentDialog.onSuccess) {
                     this.currentDialog.onSuccess(res, form);
+                }
                 this.close(true);
             },
             handleFormError(res, form, data) {

@@ -80,9 +80,7 @@
                 this.form.errors = {};
                 // update initial form values
                 if (this.$refs.form) this.$refs.form.updateFields();
-
                 this.syncState();
-
                 this.$emit("success", res, this.form);
             };
 
@@ -154,7 +152,6 @@
             submit() {
                 this.form.status = "loading";
                 this.form.loading = true;
-
                 this.$emit("submit", this.form);
 
                 if (this.form.url && !this.skipHttp) {

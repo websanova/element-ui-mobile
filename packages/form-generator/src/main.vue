@@ -28,6 +28,16 @@
                 ></el-option>
             </el-select>
 
+            <el-select-remote
+                v-model="form.body[field.prop]"
+                v-else-if="field.type === 'select-remote'"
+                :url="field.url"
+                :placeholder="field.placeholder"
+                @clear="onClearSelect(field, index)"
+            >
+
+            </el-select-remote>
+
             <div
                 v-else-if="field.type === 'radio'"
             >
@@ -139,6 +149,13 @@
         option: {
             module: "el-select",
             attrs: {}
+        },
+        "select-remote": {
+            module: "el-select-remote",
+            attrs: {
+                autofill: true,
+                clearable: true
+            }
         }
     };
 
@@ -184,7 +201,7 @@
                 this.$emit("created", this.form);
             },
             onFormSubmit(form) {
-                this.$emit("submit", form);
+                //this.$emit("submit", form);
             },
             onFormSuccess(err, form) {
                 this.$emit("success", err, form);
@@ -238,6 +255,9 @@
                 if (field.showWordLimit) attrs.showWordLimit = field.showWordLimit;
 
                 return attrs;
+            },
+            onClearSelect(field, index) {
+                this.form.body[field.prop] = undefined;
             }
         }
     };

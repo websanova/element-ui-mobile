@@ -77,6 +77,9 @@
             },
             size: String
         },
+        data: {
+            resetting: false
+        },
         watch: {
             error: {
                 immediate: true,
@@ -140,7 +143,7 @@
                     path = path.replace(/:/, ".");
                 }
 
-                return getPropByPath(model, path, true).v;
+                return getPropByPath(model, path, true).o[this.prop];
             },
             isRequired() {
                 let rules = this.getRules();
@@ -232,18 +235,18 @@
                 this.validateMessage = "";
 
                 let model = this.form.model;
-                let value = this.fieldValue;
+                // let value = this.fieldValue;
                 let path = this.prop;
+
                 if (path.indexOf(":") !== -1) {
                     path = path.replace(/:/, ".");
                 }
 
                 let prop = getPropByPath(model, path, true);
 
-                this.validateDisabled = false;
-                if (Array.isArray(value)) {
+                if (Array.isArray(this.initialValue)) {
                     prop.o[prop.k] = [].concat(this.initialValue);
-                } else if (typeof value === "object") {
+                } else if (typeof this.initialValue === "object") {
                     prop.o[prop.k] = Object.assign({}, this.initialValue);
                 } else {
                     prop.o[prop.k] = this.initialValue;
@@ -257,11 +260,14 @@
                 let value = this.fieldValue;
 
                 if (Array.isArray(value)) {
-                    this.initialValue = this.fieldValue.concat([]);
-                } else {
-                    this.initialValue = this.fieldValue;
+                    this.initialValue = value.concat([]);
+                } else if (typeof value === "string") {
+                    this.initialValue = value;
+                } else if (typeof value === "number") {
+                    this.initialValue = value;
                 }
 
+                this.resetting = true;
                 this.resetField();
             },
             getRules() {
@@ -295,23 +301,33 @@
                 this.validate("blur");
             },
             onFieldChange() {
+                if (this.resetting) return;
                 if (this.validateDisabled) {
                     this.validateDisabled = false;
                     return;
                 }
 
+                // if (!this.resetting) {
                 this.validate("change");
                 let prop = getPropByPath(this.form.model, this.prop, true);
                 this.dispatch("ElForm", "el.form.change", [this, prop.k, prop.v]);
+                // }
+                // this.resetting = false;
             }
         },
         mounted() {
             if (this.prop) {
                 this.dispatch("ElForm", "el.form.addField", [this]);
 
-                let initialValue = this.fieldValue;
-                if (Array.isArray(initialValue)) {
-                    initialValue = [].concat(initialValue);
+                let initialValue;
+                if (this.fieldValue) {
+                    if (Array.isArray(initialValue)) {
+                        initialValue = [].concat(this.fieldValue);
+                    } else if (typeof this.fieldValue === "object") {
+                        initialValue = Object.assign(this.fieldValue);
+                    } else {
+                        initialValue = this.fieldValue;
+                    }
                 }
 
                 if (this.initialValue === null || this.initialValue === undefined) {

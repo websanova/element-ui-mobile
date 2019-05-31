@@ -61,7 +61,7 @@ const fields = [
     {
         title: "Switch",
         prop: "switch",
-        type: "switch",
+        type: "toggle",
     },
     {
         title: "Range",
@@ -82,7 +82,7 @@ const fields = [
     {
         title: "Select",
         prop: "select",
-        type: "select",
+        type: "option",
         default: "option2",
         options: [
             { label: "Option 1", value: "option1" },
