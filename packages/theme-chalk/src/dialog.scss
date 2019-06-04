@@ -18,6 +18,11 @@
         display: flex;
         flex-direction: column;
 
+        > .el-dialog {
+            width: 100%;
+            height: 100%;
+        }
+
         .el-dialog__body {
             // the body should take the remaining space
             flex: 1;

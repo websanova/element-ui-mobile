@@ -68,7 +68,7 @@
                 const { popperOptions, ...attrs } = this.$attrs;
                 return { ...attrs, popperOptions };
             }
-        }
+        },
         // watch: {
         //     visible(value) {
         //         console.log('visible', value)
@@ -85,22 +85,22 @@
         //         }
         //     }
         // },
-        // methods: {
-        //     onShow(value) {
-        //         console.log('onShow', value)
-        //         // this._value = true;
-        //     },
-        //     onHide(value) {
-        //         console.log('onHide', value)
-        //         // this._value = false;
-        //     },
-        //     onClickOutside() {
-        //         console.log('onClickOutside')
-        //         this.close();
-        //     },
-        //     close() {
-        //         // this.$emit("input", false);
-        //     }
-        // }
+        methods: {
+            //     onShow(value) {
+            //         console.log('onShow', value)
+            //         // this._value = true;
+            //     },
+            //     onHide(value) {
+            //         console.log('onHide', value)
+            //         // this._value = false;
+            //     },
+            //     onClickOutside() {
+            //         console.log('onClickOutside')
+            //         this.close();
+            //     },
+            close() {
+                this.$emit("input", false);
+            }
+        }
     };
 </script>

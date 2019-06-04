@@ -2,7 +2,7 @@
     "name": "@websanova/element-ui-mobile",
     "description": "Mobile extensions for element-ui",
     "licenses": "MIT, GPL",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/websanova/element-mobile"
