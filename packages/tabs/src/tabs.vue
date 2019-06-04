@@ -13,6 +13,7 @@
             activeName: String,
             closable: Boolean,
             addable: Boolean,
+            mobileDropdown: Boolean,
             value: {},
             editable: Boolean,
             tabPosition: {
@@ -31,7 +32,7 @@
 
         data() {
             return {
-                currentName: this.value || this.activeName,
+                currentName: (this.value || this.activeName) + "",
                 panes: []
             };
         },
@@ -79,6 +80,10 @@
                     this.panes = [];
                 }
             },
+            handleTabSelect(value) {
+                this.setCurrentName(value + "");
+                this.$emit("tab-select", value + "", event);
+            },
             handleTabClick(tab, tabName, event) {
                 if (tab.disabled) return;
                 this.setCurrentName(tabName);
@@ -96,8 +101,8 @@
             },
             setCurrentName(value) {
                 const changeCurrentName = () => {
-                    this.currentName = value;
-                    this.$emit("input", value);
+                    this.currentName = value + "";
+                    this.$emit("input", value + "");
                 };
                 if (this.currentName !== value && this.beforeLeave) {
                     const before = this.beforeLeave(value, this.currentName);
@@ -162,20 +167,72 @@
 
                 ref: "nav"
             };
+
+            const tabs = this._l(panes, (pane, index) => {
+                let tabName = pane.name || pane.index || index;
+                const tabLabelContent = pane.$slots.label || pane.label;
+                // const _pane = pane.$slots.default[index].componentInstance;
+                return {
+                    label: tabLabelContent,
+                    label_str: pane.label,
+                    pane,
+                    value: tabName + ""
+                };
+            });
+
             const header = (
                 <div class={["el-tabs__header", `is-${tabPosition}`]}>
-                    <tab-nav {...navData}>
-                        <template slot="nav-prefix">
-                            {this.$slots.navPrefix}
-                        </template>
-                        <template slot="nav-suffix">
-                            {this.$slots.navSuffix}
-                        </template>
-                    </tab-nav>
-                    {(this.$slots.toolbar || newButton) && (
-                        <div class="el-tabs__toolbar">
-                            {newButton}
-                            <slot name="toolbar">{this.$slots.toolbar}</slot>
+                    <div class="el-tabs__header--inner">
+                        <tab-nav {...navData}>
+                            <template slot="nav-prefix">
+                                {this.$slots.navPrefix}
+                            </template>
+                            <template slot="nav-suffix">
+                                {this.$slots.navSuffix}
+                            </template>
+                        </tab-nav>
+                        {(this.$slots.toolbar || newButton) && (
+                            <div class="el-tabs__toolbar">
+                                {newButton}
+                                <slot name="toolbar">{this.$slots.toolbar}</slot>
+                            </div>
+                        )}
+                    </div>
+
+                    {this.mobileDropdown && (
+                        <div
+                            class={["el-tabs__header--mobile", `is-${tabPosition}`]}
+                        >
+                            <el-select
+                                value={this.currentName}
+                                clearable={false}
+                                on-change={this.handleTabSelect}
+                                popper-class="el-select--tabs-mobile"
+                            >
+                                {tabs.map(item => {
+                                    if (item.value === this.currentName) {
+                                        return (
+                                            <span slot="prefix">
+                                                {item.pane.$slots.prefixMobile}
+                                            </span>
+                                        );
+                                    }
+                                })}
+                                {tabs.map(item => {
+                                    return (
+                                        <el-option
+                                            key={item.value}
+                                            value={item.value}
+                                            label={item.label_str}
+                                        >
+                                            {item.label}
+                                        </el-option>
+                                    );
+                                })}
+                            </el-select>
+                            <div class="el-tabs__header--mobile__toolbar">
+                                {this.$slots.toolbarMobile}
+                            </div>
                         </div>
                     )}
                 </div>
@@ -201,6 +258,7 @@
                     class={{
                         "el-tabs": true,
                         "el-tabs--card": type === "card",
+                        [`el-tabs--mobile-dropdown`]: this.mobileDropdown,
                         [`el-tabs--${tabPosition}`]: true,
                         "el-tabs--border-card": type === "border-card"
                     }}

@@ -80,7 +80,7 @@
             name="light/caret-down"
         ></el-icon>
     </div>
-    <el-input
+    <!-- <el-input
       v-if="!plain"
       ref="reference"
       v-model="selectedLabel"
@@ -112,7 +112,7 @@
         <i v-show="!showClose" :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]"></i>
         <i v-if="showClose" class="el-select__caret el-input__icon el-icon-circle-close" @click="handleClearClick"></i>
       </template>
-    </el-input>
+    </el-input> -->
     <transition
       name="el-zoom-in-top"
       @before-enter="handleMenuEnter"

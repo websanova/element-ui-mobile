@@ -1,6 +1,19 @@
-$--font-family-base: "Open Sans", sans-serif;
-$--font-path: "~element-ui/lib/theme-chalk/fonts";
-$--background-text-color: #333;
-$--background-color-secondary: #333;
+$--font-family-base: "Open Sans", sans-serif !default;
+$--font-path: "~element-ui/lib/theme-chalk/fonts" !default;
+$--background-text-color: #333 !default;
+$--background-color-secondary: #333 !default;
 
-$--font-size-base: 12px;
+$--font-size-base: 12px !default;
+
+$--color-primary: #fff !default;
+$--color-secondary: rgba(88, 102, 110, 0.698039215686274) !default;
+$--color-tertiary: red !default;
+$--color-quaternary: red !default;
+$--color-quinary: red !default;
+$--color-senary: red !default;
+$--color-septenary: red !default;
+$--color-octonary: #3f4957 !default;
+$--color-nonary: $--background-color-secondary !default;
+$--color-denary: red !default;
+
+$--border-default: 1px solid $--border-color-base !default;
