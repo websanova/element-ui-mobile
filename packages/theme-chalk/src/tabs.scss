@@ -180,9 +180,16 @@
         display: flex;
         align-items: center;
         color: $--color-secondary;
+        padding: 10px 20px;
+        height: auto;
+        line-height: normal;
         > svg {
             margin-right: 6px;
             color: $--color-secondary;
         }
+    }
+
+    .el-select-dropdown__list {
+        padding: 0;
     }
 }
