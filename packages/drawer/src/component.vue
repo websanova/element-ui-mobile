@@ -38,7 +38,7 @@
                     @click="handleClose"
                 >
                     <slot name="icon">
-                        <el-iconbutton icon="times" />
+                        <el-iconbutton :icon="iconClose" />
                     </slot>
                 </button>
                 <div
@@ -143,6 +143,11 @@
             center: {
                 type: Boolean,
                 default: false
+            },
+
+            iconClose: {
+                type: String,
+                default: "times"
             }
         },
 

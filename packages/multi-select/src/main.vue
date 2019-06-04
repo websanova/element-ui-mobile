@@ -10,7 +10,7 @@
             slot="reference"
         >
             <span>{{label}}</span>
-            <el-icon name="caret-down" />
+            <el-icon name="light/caret-down" />
         </div>
         <div class="el-multi-select__header">
             <el-input

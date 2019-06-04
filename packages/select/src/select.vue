@@ -77,7 +77,7 @@
             {{selectedLabel || '---'}}
         </span>
         <el-icon
-            name="caret-down"
+            name="light/caret-down"
         ></el-icon>
     </div>
     <el-input

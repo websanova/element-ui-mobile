@@ -10,7 +10,7 @@
             <el-iconbutton
                 v-if="showClose"
                 class="el-dialog__close"
-                icon="times"
+                :icon="iconClose"
                 @click="handleClose"
             />
 
@@ -44,6 +44,10 @@
             overlayClass: {
                 type: String,
                 default: "hasOverlay"
+            },
+            iconClose: {
+                type: String,
+                default: "times"
             },
             title: null
         },

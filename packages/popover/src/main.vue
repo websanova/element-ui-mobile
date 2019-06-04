@@ -8,7 +8,7 @@
         <slot name="buttonClose">
             <el-iconbutton
                 class="el-popover__close"
-                icon="times"
+                :icon="iconClose"
                 @click="close"
             />
         </slot>
@@ -35,6 +35,10 @@
                 default: "hasOverlay"
             },
             popperClass: String,
+            iconClose: {
+                type: String,
+                default: "times"
+            },
             popperOptions: {
                 type: Object,
                 default: () => {
@@ -64,7 +68,7 @@
                 const { popperOptions, ...attrs } = this.$attrs;
                 return { ...attrs, popperOptions };
             }
-        },
+        }
         // watch: {
         //     visible(value) {
         //         console.log('visible', value)

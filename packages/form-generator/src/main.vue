@@ -59,8 +59,8 @@
                 v-model="form.body[field.prop]"
             >
                 <template slot="append" v-if="field.type === 'percent'">%</template>
-                <template slot="append" v-if="field.type === 'email'"><el-icon name="regular/envelope" /></template>
-                <template slot="append" v-if="field.type === 'url'"><el-icon name="globe" /></template>
+                <template slot="append" v-if="field.type === 'email'"><el-icon name="light/envelope" /></template>
+                <template slot="append" v-if="field.type === 'url'"><el-icon name="light/globe" /></template>
             </el-input>
 
             <component
