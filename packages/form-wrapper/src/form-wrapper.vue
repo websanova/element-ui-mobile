@@ -3,11 +3,17 @@
         ref="form"
         :model="form.body"
         :label-width="labelWidth"
+        :hide-required-asterisk="hideRequiredAsterisk"
         @submit.prevent.native="nil()"
         @change="change"
-        @validate="validate"
     >
         <slot></slot>
+        <p
+            class="el-form__error text-center"
+            v-if="form.errors.general"
+        >
+            {{form.errors.general}}
+        </p>
     </el-form>
 </template>
 
@@ -19,7 +25,9 @@
             form: {
                 type: Object,
                 default() {
-                    return {};
+                    return {
+                        errors: {}
+                    };
                 }
             },
 
@@ -35,6 +43,7 @@
         },
 
         created() {
+            console.log("CREATED");
             if (!this.form.status) {
                 this.$set(this.form, "status", null);
             }
@@ -71,16 +80,15 @@
                 }
 
                 if (this.form.msg && res.data.msg) {
-                    this.UI.message({
-                        type: "info",
-                        message: res.data.msg
-                    });
+                    this.$ui.messageInfo(res.data.msg);
                 }
 
                 this.form.errors = {};
                 // update initial form values
                 if (this.$refs.form) this.$refs.form.updateFields();
+
                 this.syncState();
+
                 this.$emit("success", res, this.form);
             };
 
@@ -96,22 +104,23 @@
                 this.setErrors(
                     body.errors || [
                         { field: "general", msg: body.msg || body.message }
+                        /*{
+                                                field: body.code,
+                                                msg: body.msg || body.message
+                                            }*/
                     ]
                 );
 
                 if (this.form.msg && body.msg) {
-                    this.UI.message({
-                        type: "error",
-                        message: body.msg
-                    });
+                    this.$ui.messageError(body.msg);
                 }
                 this.$emit("error", res, this.form);
             };
+
             this.form.clear = res => {
                 this.form.status = null;
                 this.setErrors([]);
             };
-
             this.$emit("created", this.form);
         },
 
@@ -131,14 +140,9 @@
                 // do nothing
             },
 
-            change(form, field, value) {
-                this.form.dirty = this.dirty;
-                this.form.pristine = !this.dirty;
-                this.$emit("change", form, field, value);
-            },
-
-            validate() {
-                this.form.hasValidationError = this.hasValidationError;
+            change(field) {
+                this.syncState();
+                this.$emit("change", this.form);
             },
 
             autoSubmit() {
@@ -152,6 +156,7 @@
             submit() {
                 this.form.status = "loading";
                 this.form.loading = true;
+
                 this.$emit("submit", this.form);
 
                 if (this.form.url && !this.skipHttp) {
@@ -209,12 +214,11 @@
                 validationErrors = validationErrors || [];
 
                 for (i = 0, ii = validationErrors.length; i < ii; i++) {
-                    if (!errors[validationErrors[i].field]) {
-                        errors[validationErrors[i].field] =
-                            validationErrors[i].msg || validationErrors[i].message;
+                    const err = validationErrors[i];
+                    if (!errors[err.field]) {
+                        errors[err.field] = err.msg || err.message;
                     }
                 }
-
                 this.form.errors = errors;
             }
         }
