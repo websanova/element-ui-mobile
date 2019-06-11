@@ -170,7 +170,7 @@
                     message,
                     Object.assign(
                         {
-                            type: "form",
+                            mode: "form",
                             footer: () => (
                                 <div>
                                     {this.form && this.form.errors.general && (
@@ -207,9 +207,9 @@
                     title: title || "Alert",
                     class: "el-dialog__wrapper el-dialog__wrapper--flex",
                     customClass: `
-                                                            el-dialog--system
-                                                            el-dialog--alert
-                                                        `,
+                                                                                        el-dialog--system
+                                                                                        el-dialog--alert
+                                                                                    `,
                     queue: true,
                     enterToClose: true,
                     showClose: false,
@@ -379,12 +379,12 @@
                     } else {
                         if (typeof message === "object") {
                             if (message.componentOptions && message.context) {
-                                if (dialog.type === "form") {
+                                if (dialog.mode === "form") {
                                     console.warn(
                                         "VNode is not supported by DialogManager for forms"
                                     );
                                 }
-                            } else if (dialog.type === "form") {
+                            } else if (dialog.mode === "form") {
                                 const attrs = {
                                     on: {
                                         created: this.handleFormCreated,
