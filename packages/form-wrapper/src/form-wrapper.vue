@@ -140,7 +140,7 @@
                 // do nothing
             },
 
-            change(field, value) {
+            change(form, field, value) {
                 this.syncState();
                 this.$emit("change", this.form, field, value);
             },
