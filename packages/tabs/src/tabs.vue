@@ -230,9 +230,11 @@
                                     );
                                 })}
                             </el-select>
-                            <div class="el-tabs__header--mobile__toolbar">
-                                {this.$slots.toolbarMobile}
-                            </div>
+                            {this.$slots.toolbarMobile && (
+                                <div class="el-tabs__header--mobile__toolbar">
+                                    {this.$slots.toolbarMobile}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
