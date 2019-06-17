@@ -184,11 +184,11 @@
                 <div class={["el-tabs__header", `is-${tabPosition}`]}>
                     <div class="el-tabs__header--inner">
                         <tab-nav {...navData}>
-                            <template slot="nav-prefix">
-                                {this.$slots.navPrefix}
+                            <template slot="prefix">
+                                {this.$slots["nav-prefix"]}
                             </template>
-                            <template slot="nav-suffix">
-                                {this.$slots.navSuffix}
+                            <template slot="suffix">
+                                {this.$slots["nav-suffix"]}
                             </template>
                         </tab-nav>
                         {(this.$slots.toolbar || newButton) && (

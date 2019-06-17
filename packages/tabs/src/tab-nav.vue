@@ -344,10 +344,14 @@
                             role="tablist"
                             on-keydown={changeTab}
                         >
-                            <span name="prefix">{this.$slots.prefix}</span>
+                            <span class="el-tabs__nav-prefix">
+                                {this.$slots.prefix}
+                            </span>
                             {!type ? <tab-bar tabs={panes} /> : null}
                             {tabs}
-                            <span name="suffix">{this.$slots.suffix}</span>
+                            <span class="el-tabs__nav-suffix">
+                                {this.$slots.suffix}
+                            </span>
                         </div>
                     </div>
                 </div>
