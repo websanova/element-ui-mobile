@@ -59,176 +59,176 @@
 </template>
 
 <script>
-    import Popup from "element-ui/src/utils/popup";
-    import Migrating from "element-ui/src/mixins/migrating";
-    import emitter from "element-ui/src/mixins/emitter";
-    import overlayMixin from "@websanova/element-ui-mobile/mixins/overlay";
+    import Popup from 'element-ui/src/utils/popup'
+    import Migrating from 'element-ui/src/mixins/migrating'
+    import emitter from 'element-ui/src/mixins/emitter'
+    import overlayMixin from '@websanova/element-ui-mobile/mixins/overlay'
 
     export default {
-        name: "ElDrawer",
+        name: 'ElDrawer',
 
         mixins: [Popup, emitter, Migrating, overlayMixin],
 
         props: {
             title: {
                 type: String,
-                default: ""
+                default: '',
             },
 
             modal: {
                 type: Boolean,
-                default: true
+                default: true,
             },
 
             modalAppendToBody: {
                 type: Boolean,
-                default: true
+                default: true,
             },
 
             appendToBody: {
                 type: Boolean,
-                default: false
+                default: false,
             },
 
             lockScroll: {
                 type: Boolean,
-                default: true
+                default: true,
             },
 
             closeOnClickModal: {
                 type: Boolean,
-                default: true
+                default: true,
             },
 
             closeOnPressEscape: {
                 type: Boolean,
-                default: true
+                default: true,
             },
 
             showClose: {
                 type: Boolean,
-                default: true
+                default: true,
             },
 
             width: {
                 type: String,
-                default: "25%"
+                default: '25%',
             },
 
             placement: {
                 type: String,
-                default: "right",
+                default: 'right',
                 validator(value) {
-                    return ["left", "right"].indexOf(value) !== -1;
-                }
+                    return ['left', 'right'].indexOf(value) !== -1
+                },
             },
 
             overlayClass: {
                 type: String,
-                default: "hasOverlay"
+                default: 'hasOverlay',
             },
 
             customClass: {
                 type: String,
-                default: ""
+                default: '',
             },
 
             top: {
                 type: String,
-                default: "15vh"
+                default: '15vh',
             },
 
             beforeClose: Function,
 
             center: {
                 type: Boolean,
-                default: false
+                default: false,
             },
 
             iconClose: {
                 type: String,
-                default: "times"
-            }
+                default: 'times',
+            },
         },
 
         data() {
             return {
-                closed: false
-            };
+                closed: false,
+            }
         },
 
         watch: {
             visible(val) {
                 if (val) {
-                    this.closed = false;
-                    this.$emit("open");
-                    this.$el.addEventListener("scroll", this.updatePopper);
+                    this.closed = false
+                    this.$emit('open')
+                    this.$el.addEventListener('scroll', this.updatePopper)
                     this.$nextTick(() => {
-                        this.$refs.drawer.scrollTop = 0;
-                    });
+                        this.$refs.drawer.scrollTop = 0
+                    })
                     if (this.appendToBody) {
-                        document.body.appendChild(this.$el);
+                        document.body.appendChild(this.$el)
                     }
                 } else {
-                    this.$el.removeEventListener("scroll", this.updatePopper);
-                    if (!this.closed) this.$emit("close");
+                    this.$el.removeEventListener('scroll', this.updatePopper)
+                    if (!this.closed) this.$emit('close')
                 }
-            }
+            },
         },
 
         computed: {
             style() {
-                let style = {};
-                style.width = this.width;
-                return style;
-            }
+                let style = {}
+                style.width = this.width
+                return style
+            },
         },
 
         methods: {
             getMigratingConfig() {
                 return {
                     props: {
-                        size: "size is removed."
-                    }
-                };
+                        size: 'size is removed.',
+                    },
+                }
             },
             handleWrapperClick() {
-                if (!this.closeOnClickModal) return;
-                this.closeDrawer();
+                if (!this.closeOnClickModal) return
+                this.closeDrawer()
             },
             handleClose() {
-                this.closeDrawer();
+                this.closeDrawer()
             },
             closeDrawer() {
-                this.$emit("close:click");
-                if (typeof this.beforeClose === "function") {
-                    this.beforeClose(this.hide);
+                this.$emit('close:click')
+                if (typeof this.beforeClose === 'function') {
+                    this.beforeClose(this.hide)
                 } else {
-                    this.hide();
+                    this.hide()
                 }
             },
             hide(cancel) {
                 if (cancel !== false) {
-                    this.$emit("update:visible", false);
-                    this.$emit("close");
-                    this.closed = true;
+                    this.$emit('update:visible', false)
+                    this.$emit('close')
+                    this.closed = true
                 }
             },
             updatePopper() {
-                this.broadcast("ElSelectDropdown", "updatePopper");
-                this.broadcast("ElDropdownMenu", "updatePopper");
+                this.broadcast('ElSelectDropdown', 'updatePopper')
+                this.broadcast('ElDropdownMenu', 'updatePopper')
             },
             afterLeave() {
-                this.$emit("closed");
-            }
+                this.$emit('closed')
+            },
         },
 
         mounted() {
             if (this.visible) {
-                this.rendered = true;
-                this.open();
+                this.rendered = true
+                this.open()
                 if (this.appendToBody) {
-                    document.body.appendChild(this.$el);
+                    document.body.appendChild(this.$el)
                 }
             }
         },
@@ -236,8 +236,8 @@
         destroyed() {
             // if appendToBody is true, remove DOM node after destroy
             if (this.appendToBody && this.$el && this.$el.parentNode) {
-                this.$el.parentNode.removeChild(this.$el);
+                this.$el.parentNode.removeChild(this.$el)
             }
-        }
-    };
+        },
+    }
 </script>

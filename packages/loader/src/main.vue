@@ -14,25 +14,23 @@
 
 <script>
     export default {
-        name: "ElLoader",
+        name: 'ElLoader',
         props: {
             icon: String,
-            size: String
+            size: String,
         },
         computed: {
             _icon() {
-                return this.icon || this.$ui.loader.defaults.icon || "loading";
-            }
+                return this.icon || this.$ui.loader.defaults.icon || 'loading'
+            },
         },
         computed: {
             _elFormItemSize() {
-                return (this.elFormItem || {}).elFormItemSize;
+                return (this.elFormItem || {}).elFormItemSize
             },
             _size() {
-                return (
-                    this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
-                );
-            }
-        }
-    };
+                return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
+            },
+        },
+    }
 </script>

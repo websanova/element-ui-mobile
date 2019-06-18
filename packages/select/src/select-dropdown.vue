@@ -8,69 +8,69 @@
 </template>
 
 <script type="text/babel">
-  import Popper from 'element-ui/src/utils/vue-popper';
+    import Popper from 'element-ui/src/utils/vue-popper'
 
-  export default {
-    name: 'ElSelectDropdown',
+    export default {
+        name: 'ElSelectDropdown',
 
-    componentName: 'ElSelectDropdown',
+        componentName: 'ElSelectDropdown',
 
-    mixins: [Popper],
+        mixins: [Popper],
 
-    props: {
-      placement: {
-        default: 'bottom-start'
-      },
+        props: {
+            placement: {
+                default: 'bottom-start',
+            },
 
-      boundariesPadding: {
-        default: 0
-      },
+            boundariesPadding: {
+                default: 0,
+            },
 
-      popperOptions: {
-        default() {
-          return {
-            gpuAcceleration: false
-          };
-        }
-      },
+            popperOptions: {
+                default() {
+                    return {
+                        gpuAcceleration: false,
+                    }
+                },
+            },
 
-      visibleArrow: {
-        default: true
-      },
+            visibleArrow: {
+                default: true,
+            },
 
-      appendToBody: {
-        type: Boolean,
-        default: true
-      }
-    },
+            appendToBody: {
+                type: Boolean,
+                default: true,
+            },
+        },
 
-    data() {
-      return {
-        minWidth: ''
-      };
-    },
+        data() {
+            return {
+                minWidth: '',
+            }
+        },
 
-    computed: {
-      popperClass() {
-        return this.$parent.popperClass;
-      }
-    },
+        computed: {
+            popperClass() {
+                return this.$parent.popperClass
+            },
+        },
 
-    watch: {
-      '$parent.inputWidth'() {
-        this.minWidth = this.$parent.$el.getBoundingClientRect().width + 'px';
-      }
-    },
+        watch: {
+            '$parent.inputWidth'() {
+                this.minWidth = this.$parent.$el.getBoundingClientRect().width + 'px'
+            },
+        },
 
-    mounted() {
-        if (this.$parent.$refs.reference) {
-            this.referenceElm = this.$parent.$refs.reference.$el;
-        }
-      this.$parent.popperElm = this.popperElm = this.$el;
-      this.$on('updatePopper', () => {
-        if (this.$parent.visible) this.updatePopper();
-      });
-      this.$on('destroyPopper', this.destroyPopper);
+        mounted() {
+            if (this.$parent.$refs.reference) {
+                this.referenceElm = this.$parent.$refs.reference.$el
+            }
+            this.$parent.popperElm = this.popperElm = this.$el
+            this.$on('updatePopper', () => {
+                if (this.$parent.visible) this.updatePopper()
+            })
+            this.$on('destroyPopper', this.destroyPopper)
+        },
     }
-  };
 </script>

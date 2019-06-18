@@ -7,17 +7,17 @@
   </form>
 </template>
 <script>
-    import objectAssign from "element-ui/src/utils/merge";
+    import objectAssign from 'element-ui/src/utils/merge'
 
     export default {
-        name: "ElForm",
+        name: 'ElForm',
 
-        componentName: "ElForm",
+        componentName: 'ElForm',
 
         provide() {
             return {
-                elForm: this
-            };
+                elForm: this,
+            }
         },
 
         props: {
@@ -27,163 +27,150 @@
             labelWidth: String,
             labelSuffix: {
                 type: String,
-                default: ""
+                default: '',
             },
             inline: Boolean,
             inlineMessage: Boolean,
             statusIcon: Boolean,
             showMessage: {
                 type: Boolean,
-                default: true
+                default: true,
             },
             size: String,
             disabled: Boolean,
             validateOnRuleChange: {
                 type: Boolean,
-                default: true
+                default: true,
             },
             hideRequiredAsterisk: {
                 type: Boolean,
-                default: false
-            }
+                default: false,
+            },
         },
         watch: {
             rules() {
                 if (this.validateOnRuleChange) {
-                    this.validate(() => {});
+                    this.validate(() => {})
                 }
-            }
+            },
         },
         data() {
             return {
-                fields: []
-            };
+                fields: [],
+            }
         },
         created() {
-            this.$on("el.form.addField", field => {
+            this.$on('el.form.addField', field => {
                 if (field) {
-                    this.fields.push(field);
+                    this.fields.push(field)
                 }
-            });
+            })
             /* istanbul ignore next */
-            this.$on("el.form.removeField", field => {
+            this.$on('el.form.removeField', field => {
                 if (field.prop) {
-                    this.fields.splice(this.fields.indexOf(field), 1);
+                    this.fields.splice(this.fields.indexOf(field), 1)
                 }
-            });
-            this.$on("el.form.change", (changedField, prop) => {
-                this.$emit("change", this.form, prop, changedField.fieldValue);
-            });
+            })
+            this.$on('el.form.change', (changedField, prop) => {
+                this.$emit('change', this.form, prop, changedField.fieldValue)
+            })
         },
         computed: {
             dirty() {
-                let dirty = false;
+                let dirty = false
                 this.fields.forEach(field => {
-                    if (field.dirty) dirty = field.dirty;
-                });
-                return dirty;
+                    if (field.dirty) dirty = field.dirty
+                })
+                return dirty
             },
             hasValidationError() {
-                let hasValidationError = false;
+                let hasValidationError = false
                 this.fields.forEach(field => {
-                    if (field.validateState === "error") hasValidationError = true;
-                });
-                return hasValidationError;
-            }
+                    if (field.validateState === 'error') hasValidationError = true
+                })
+                return hasValidationError
+            },
         },
         methods: {
             resetFields() {
                 if (!this.model) {
-                    console.warn(
-                        "[Element Warn][Form]model is required for resetFields to work."
-                    );
-                    return;
+                    console.warn('[Element Warn][Form]model is required for resetFields to work.')
+                    return
                 }
                 this.fields.forEach(field => {
-                    field.resetField();
-                });
+                    field.resetField()
+                })
             },
             updateFields() {
                 if (!this.model) {
-                    console.warn(
-                        "[Element Warn][Form]model is required for updateFields to work."
-                    );
-                    return;
+                    console.warn('[Element Warn][Form]model is required for updateFields to work.')
+                    return
                 }
                 this.fields.forEach(field => {
-                    field.updateField();
-                });
+                    field.updateField()
+                })
             },
             clearValidate(props = []) {
                 const fields = props.length
-                    ? typeof props === "string"
+                    ? typeof props === 'string'
                         ? this.fields.filter(field => props === field.prop)
-                        : this.fields.filter(
-                              field => props.indexOf(field.prop) > -1
-                          )
-                    : this.fields;
+                        : this.fields.filter(field => props.indexOf(field.prop) > -1)
+                    : this.fields
                 fields.forEach(field => {
-                    field.clearValidate();
-                });
+                    field.clearValidate()
+                })
             },
             validate(callback) {
                 if (!this.model) {
-                    console.warn(
-                        "[Element Warn][Form]model is required for validate to work!"
-                    );
-                    return;
+                    console.warn('[Element Warn][Form]model is required for validate to work!')
+                    return
                 }
 
-                let promise;
+                let promise
                 // if no callback, return promise
-                if (typeof callback !== "function" && window.Promise) {
+                if (typeof callback !== 'function' && window.Promise) {
                     promise = new window.Promise((resolve, reject) => {
                         callback = function(valid) {
-                            valid ? resolve(valid) : reject(valid);
-                        };
-                    });
+                            valid ? resolve(valid) : reject(valid)
+                        }
+                    })
                 }
 
-                let valid = true;
-                let count = 0;
+                let valid = true
+                let count = 0
                 // 如果需要验证的fields为空，调用验证时立刻返回callback
                 if (this.fields.length === 0 && callback) {
-                    callback(true);
+                    callback(true)
                 }
-                let invalidFields = {};
+                let invalidFields = {}
                 this.fields.forEach(field => {
-                    field.validate("", (message, field) => {
+                    field.validate('', (message, field) => {
                         if (message) {
-                            valid = false;
+                            valid = false
                         }
-                        invalidFields = objectAssign({}, invalidFields, field);
-                        if (
-                            typeof callback === "function" &&
-                            ++count === this.fields.length
-                        ) {
-                            callback(valid, invalidFields);
+                        invalidFields = objectAssign({}, invalidFields, field)
+                        if (typeof callback === 'function' && ++count === this.fields.length) {
+                            callback(valid, invalidFields)
                         }
-                    });
-                });
+                    })
+                })
 
                 if (promise) {
-                    return promise;
+                    return promise
                 }
             },
             validateField(props, cb) {
-                props = [].concat(props);
-                const fields = this.fields.filter(
-                    field => props.indexOf(field.prop) !== -1
-                );
+                props = [].concat(props)
+                const fields = this.fields.filter(field => props.indexOf(field.prop) !== -1)
                 if (!fields.length) {
-                    console.warn("[Element Warn]please pass correct props!");
-                    return;
+                    console.warn('[Element Warn]please pass correct props!')
+                    return
                 }
 
                 fields.forEach(field => {
-                    field.validate("", cb);
-                });
-            }
-        }
-    };
+                    field.validate('', cb)
+                })
+            },
+        },
+    }
 </script>

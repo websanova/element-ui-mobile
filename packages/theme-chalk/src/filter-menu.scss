@@ -1,5 +1,5 @@
-@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
-@import "mixins/breakpoints.scss";
+@import '~element-ui/packages/theme-chalk/src/mixins/mixins';
+@import 'mixins/breakpoints.scss';
 
 @include b(filter-menu) {
     > .el-menu {
@@ -7,7 +7,7 @@
             padding: 6px 10px;
             line-height: normal;
             height: auto;
-            @include media("<desktop") {
+            @include media('<desktop') {
                 padding: 10px 0;
             }
         }

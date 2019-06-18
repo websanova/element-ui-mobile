@@ -1,5 +1,5 @@
 // https://github.com/eduardoboucas/include-media
-@import "~include-media/dist/include-media";
+@import '~include-media/dist/include-media';
 
 $breakpoints: (
     watch: 0px,
@@ -11,30 +11,28 @@ $breakpoints: (
 );
 
 $media-expressions: (
-    "watch": '(max-width: #{map-get($breakpoints, "phone")})',
-    "phone":
+    'watch': '(max-width: #{map-get($breakpoints, "phone")})',
+    'phone':
         '(min-width: #{map-get($breakpoints, "phone")}) and (max-width: #{map-get($breakpoints, "tablet")})',
-    "tablet":
+    'tablet':
         '(min-width: #{map-get($breakpoints, "tablet")}) and (max-width: #{map-get($breakpoints, "tablet-landscape")})',
     // this covers phone portrait and landscape
-        "desktop":
+        'desktop':
         '(min-width: #{map-get($breakpoints, "desktop")}) and (max-width: #{map-get($breakpoints, "bigdesktop")})',
-    "bigdesktop": '(min-width: #{map-get($breakpoints, "bigdesktop")})',
-    "screen": "screen",
-    "print": "print",
+    'bigdesktop': '(min-width: #{map-get($breakpoints, "bigdesktop")})',
+    'screen': 'screen',
+    'print': 'print',
     // https://css-tricks.com/touch-devices-not-judged-size/
-        "hover": "(hover: hover)",
-    "nohover": "(hover: none)",
-    "fpointer": "(pointer: fine)",
-    "cpointer": "(pointer: coarse)",
-    "nopointer": "(pointer: none)",
-    "handheld": "handheld",
-    "landscape": "(orientation: landscape)",
-    "portrait": "(orientation: portrait)",
-    "retina-2-x":
-        "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)",
-    "retina-3-x":
-        "(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi)",
+        'hover': '(hover: hover)',
+    'nohover': '(hover: none)',
+    'fpointer': '(pointer: fine)',
+    'cpointer': '(pointer: coarse)',
+    'nopointer': '(pointer: none)',
+    'handheld': 'handheld',
+    'landscape': '(orientation: landscape)',
+    'portrait': '(orientation: portrait)',
+    'retina-2-x': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)',
+    'retina-3-x': '(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi)',
 );
 
 /* Usage Examples

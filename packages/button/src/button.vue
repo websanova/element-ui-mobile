@@ -28,57 +28,55 @@
      * Dependencies: el-loader, el-icon
      */
     export default {
-        name: "ElButton",
+        name: 'ElButton',
 
         inject: {
             elForm: {
-                default: ""
+                default: '',
             },
             elFormItem: {
-                default: ""
-            }
+                default: '',
+            },
         },
 
         props: {
             type: {
                 type: String,
-                default: "default"
+                default: 'default',
             },
             size: String,
             icon: {
                 type: String,
-                default: ""
+                default: '',
             },
             nativeType: {
                 type: String,
-                default: "button"
+                default: 'button',
             },
             loading: Boolean,
             disabled: Boolean,
             plain: Boolean,
             autofocus: Boolean,
             round: Boolean,
-            circle: Boolean
+            circle: Boolean,
         },
 
         computed: {
             _elFormItemSize() {
-                return (this.elFormItem || {}).elFormItemSize;
+                return (this.elFormItem || {}).elFormItemSize
             },
             buttonSize() {
-                return (
-                    this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
-                );
+                return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
             },
             buttonDisabled() {
-                return this.disabled || (this.elForm || {}).disabled;
-            }
+                return this.disabled || (this.elForm || {}).disabled
+            },
         },
 
         methods: {
             handleClick(evt) {
-                this.$emit("click", evt);
-            }
-        }
-    };
+                this.$emit('click', evt)
+            },
+        },
+    }
 </script>

@@ -1,8 +1,8 @@
-import Component from "./src/form";
+import Component from './src/form'
 
 /* istanbul ignore next */
 Component.install = function(Vue) {
-    Vue.component(Component.name, Component);
-};
+    Vue.component(Component.name, Component)
+}
 
-export default Component;
+export default Component

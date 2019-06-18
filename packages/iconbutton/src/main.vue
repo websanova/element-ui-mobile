@@ -19,25 +19,23 @@
 
 <script>
     export default {
-        name: "ElIconbutton",
+        name: 'ElIconbutton',
         props: {
             icon: String,
             title: String,
             size: String,
             vAlign: {
                 type: String,
-                default: "start"
-            }
+                default: 'start',
+            },
         },
         computed: {
             _elFormItemSize() {
-                return (this.elFormItem || {}).elFormItemSize;
+                return (this.elFormItem || {}).elFormItemSize
             },
             _size() {
-                return (
-                    this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
-                );
-            }
-        }
-    };
+                return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
+            },
+        },
+    }
 </script>

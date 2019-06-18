@@ -1,9 +1,9 @@
 // https://github.com/ElemeFE/element/pull/12746#issuecomment-420890881
 // https://github.com/sunhaoxiang/element/blob/dev/packages/theme-chalk/src/drawer.scss
 
-@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
-@import "common/var";
-@import "mixins/breakpoints.scss";
+@import '~element-ui/packages/theme-chalk/src/mixins/mixins';
+@import 'common/var';
+@import 'mixins/breakpoints.scss';
 
 .el-tabs--ext {
     display: flex;
@@ -119,7 +119,7 @@
         }
     }
 
-    @include media(">tablet") {
+    @include media('>tablet') {
         .el-tabs__header--mobile {
             display: none !important;
         }
@@ -127,7 +127,7 @@
 
     &.el-tabs--mobile-dropdown {
         > .el-tabs__header {
-            @include media("<tablet") {
+            @include media('<tablet') {
                 > .el-tabs__header--inner {
                     display: none !important;
                 }

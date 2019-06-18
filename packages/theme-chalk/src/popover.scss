@@ -1,5 +1,5 @@
-@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
-@import "mixins/breakpoints.scss";
+@import '~element-ui/packages/theme-chalk/src/mixins/mixins';
+@import 'mixins/breakpoints.scss';
 // @import "var";
 
 @mixin el-popover--full() {
@@ -36,7 +36,7 @@
         }
 
         // do not show close button on desktop
-        @include media(">=desktop") {
+        @include media('>=desktop') {
             display: none;
         }
     }
@@ -47,7 +47,7 @@
 
     // full sizes drawers for mobile
     @include m(full-phone) {
-        @include media("<tablet") {
+        @include media('<tablet') {
             @include e(close) {
                 display: block;
             }
@@ -56,7 +56,7 @@
     }
 
     @include m(full-tablet) {
-        @include media("<desktop") {
+        @include media('<desktop') {
             @include e(close) {
                 display: block;
             }

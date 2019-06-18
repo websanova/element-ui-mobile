@@ -19,13 +19,13 @@
 </template>
 
 <script>
-    import ElCollapseTransition from 'element-ui/src/transitions/collapse-transition';
-    import ElAlert from 'element-ui/packages/alert';
+    import ElCollapseTransition from 'element-ui/src/transitions/collapse-transition'
+    import ElAlert from 'element-ui/packages/alert'
 
     export default {
         components: { ElCollapseTransition, ElAlert },
         props: {
             messages: Array,
         },
-    };
+    }
 </script>

@@ -1,6 +1,6 @@
-@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
-@import "~element-ui/packages/theme-chalk/src/common/var";
-@import "mixins/breakpoints.scss";
+@import '~element-ui/packages/theme-chalk/src/mixins/mixins';
+@import '~element-ui/packages/theme-chalk/src/common/var';
+@import 'mixins/breakpoints.scss';
 
 @include b(card--ext) {
     border-radius: $--card-border-radius;
@@ -80,7 +80,7 @@
         padding: 10px 20px;
         flex-shrink: 0;
 
-        @include media("<tablet") {
+        @include media('<tablet') {
             padding: 10px 5px 10px 12px;
         }
     }
@@ -94,7 +94,7 @@
         max-height: 80%;
         overflow: hidden;
         margin-right: 10px;
-        @include media("<tablet") {
+        @include media('<tablet') {
             font-size: 16px;
         }
     }

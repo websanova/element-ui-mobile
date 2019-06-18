@@ -2,8 +2,8 @@
 //     margin-bottom: 0px;
 // }
 
-@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
-@import "./mixins/breakpoints";
+@import '~element-ui/packages/theme-chalk/src/mixins/mixins';
+@import './mixins/breakpoints';
 
 @include b(dialog) {
     margin: 0 auto;
@@ -29,7 +29,7 @@
         }
 
         // full sizes dialogs for touch devices smaller than desktop
-        @include media("<desktop") {
+        @include media('<desktop') {
             width: 100% !important;
             min-width: 100% !important;
             max-width: 100% !important;

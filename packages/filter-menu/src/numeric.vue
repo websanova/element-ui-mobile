@@ -22,69 +22,69 @@
     import ElMultiSelect from '../../multi-select'
 
     const filterOptions = [
-        { label: "EQUALS", value: "=" },
-        { label: "DOES NOT EQUAL", value: "!=" },
-        { label: "LESS THAN", value: "<" },
-        { label: "GREATER THAN", value: ">" },
-        { label: "LESS THAN OR EQUAL", value: "<=" },
-        { label: "GREATER THAN OR EQUAL", value: ">=" }
-    ];
+        { label: 'EQUALS', value: '=' },
+        { label: 'DOES NOT EQUAL', value: '!=' },
+        { label: 'LESS THAN', value: '<' },
+        { label: 'GREATER THAN', value: '>' },
+        { label: 'LESS THAN OR EQUAL', value: '<=' },
+        { label: 'GREATER THAN OR EQUAL', value: '>=' },
+    ]
 
     export default {
-        name: "ElNumericFilter",
+        name: 'ElNumericFilter',
         components: { ElMultiSelect },
         props: {
             options: {
                 type: Array,
-                default: () => filterOptions
+                default: () => filterOptions,
             },
             inputDelay: {
                 type: Number,
-                default: 300
+                default: 300,
             },
             initialValue: {
                 type: String,
-                default: ""
+                default: '',
             },
             initialType: {
                 type: String,
-                default: "="
-            }
+                default: '=',
+            },
         },
         data() {
             return {
-                inputValue: "", // input model
-                value: "", // final search value
-                type: "" // search type (from menu selection)
-            };
+                inputValue: '', // input model
+                value: '', // final search value
+                type: '', // search type (from menu selection)
+            }
         },
         watch: {
             inputValue: function(value) {
-                value = value.trim();
-                clearTimeout(this.changeTimeout);
+                value = value.trim()
+                clearTimeout(this.changeTimeout)
                 this.changeTimeout = setTimeout(() => {
-                    if (value !== this.value) this.handleChange(value);
-                }, this.inputDelay);
-            }
+                    if (value !== this.value) this.handleChange(value)
+                }, this.inputDelay)
+            },
         },
         mounted() {
-            this.inputValue = this.initialValue;
-            this.value = this.initialValue;
-            this.type = this.initialType;
+            this.inputValue = this.initialValue
+            this.value = this.initialValue
+            this.type = this.initialType
         },
         methods: {
             handleSelect(key) {
-                this.type = key;
-                this.$emit("change", this.value, this.type);
+                this.type = key
+                this.$emit('change', this.value, this.type)
             },
             handleChange(value) {
-                clearTimeout(this.changeTimeout);
-                this.value = value;
-                this.$emit("change", this.value, this.type);
-            }
+                clearTimeout(this.changeTimeout)
+                this.value = value
+                this.$emit('change', this.value, this.type)
+            },
         },
         beforeDestroy() {
-            clearTimeout(this.changeTimeout);
-        }
-    };
+            clearTimeout(this.changeTimeout)
+        },
+    }
 </script>

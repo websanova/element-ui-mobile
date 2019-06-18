@@ -30,26 +30,26 @@
 
 <script>
     export default {
-        name: "ElBox",
+        name: 'ElBox',
 
         props: {
             size: {
                 type: String,
-                default: null
+                default: null,
             },
 
             width: {
                 type: String,
-                default: null
+                default: null,
             },
 
             align: {
                 type: String,
-                default: ""
+                default: '',
             },
             vAlign: {
                 type: String,
-                default: ""
+                default: '',
             },
 
             pad: Boolean,
@@ -63,12 +63,12 @@
             scrollY: Boolean,
             shrink: {
                 type: Boolean,
-                default: true
+                default: true,
             },
             grow: {
                 type: Boolean,
-                default: true
-            }
-        }
-    };
+                default: true,
+            },
+        },
+    }
 </script>

@@ -25,7 +25,7 @@
 <script>
     /* eslint-disable */
     export default {
-        name: "ElTabPane",
+        name: 'ElTabPane',
 
         props: {
             label: String,
@@ -38,39 +38,38 @@
             body: {
                 type: Object,
                 default: () => {
-                    return {};
-                }
-            }
+                    return {}
+                },
+            },
         },
 
         data() {
             return {
                 index: null,
-                loaded: false
-            };
+                loaded: false,
+            }
         },
 
         computed: {
             isClosable() {
-                return this.closable || this.$parent.closable;
+                return this.closable || this.$parent.closable
             },
             active() {
-                const active =
-                    this.$parent.currentName === (this.name || this.index);
+                const active = this.$parent.currentName === (this.name || this.index)
                 if (active) {
-                    this.loaded = true;
+                    this.loaded = true
                 }
-                return active;
+                return active
             },
             paneName() {
-                return this.name || this.index;
-            }
+                return this.name || this.index
+            },
         },
 
         watch: {
             label() {
-                this.$parent.$forceUpdate();
-            }
-        }
-    };
+                this.$parent.$forceUpdate()
+            },
+        },
+    }
 </script>

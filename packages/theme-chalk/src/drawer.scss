@@ -1,11 +1,11 @@
 // https://github.com/ElemeFE/element/pull/12746#issuecomment-420890881
 // https://github.com/sunhaoxiang/element/blob/dev/packages/theme-chalk/src/drawer.scss
 
-@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
-@import "~element-ui/packages/theme-chalk/src/mixins/utils";
-@import "~element-ui/packages/theme-chalk/src/common/var";
-@import "~element-ui/packages/theme-chalk/src/common/popup";
-@import "mixins/breakpoints.scss";
+@import '~element-ui/packages/theme-chalk/src/mixins/mixins';
+@import '~element-ui/packages/theme-chalk/src/mixins/utils';
+@import '~element-ui/packages/theme-chalk/src/common/var';
+@import '~element-ui/packages/theme-chalk/src/common/popup';
+@import 'mixins/breakpoints.scss';
 
 $--drawer-font-size: 1em;
 $--drawer-title-font-size: 1.4em;
@@ -117,7 +117,7 @@ $--drawer-padding-primary: 15px 20px 20px;
 
     @include m(full-phone) {
         > .el-drawer {
-            @include media("<tablet") {
+            @include media('<tablet') {
                 width: 100% !important;
             }
         }
@@ -125,7 +125,7 @@ $--drawer-padding-primary: 15px 20px 20px;
 
     @include m(full-tablet) {
         > .el-drawer {
-            @include media("<desktop") {
+            @include media('<desktop') {
                 width: 100% !important;
             }
         }

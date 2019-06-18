@@ -1,6 +1,5 @@
-import Component from '../tabs/src/tab-pane.vue'
+import Component from './src/component'
 
-/* istanbul ignore next */
 Component.install = function(Vue) {
     Vue.component(Component.name, Component)
 }

@@ -21,14 +21,14 @@
 
 <script>
     export default {
-        name: "ElCard",
+        name: 'ElCard',
         props: {
             title: String,
             scrollbar: Boolean,
             bodyStyle: {},
             shadow: {
-                type: String
-            }
-        }
-    };
+                type: String,
+            },
+        },
+    }
 </script>

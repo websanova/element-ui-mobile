@@ -21,36 +21,36 @@
 </template>
 
 <script>
-    import ElPopoverOriginal from "element-ui/packages/popover";
-    import overlayMixin from "@websanova/element-ui-mobile/mixins/overlay";
+    import ElPopoverOriginal from 'element-ui/packages/popover'
+    import overlayMixin from '@websanova/element-ui-mobile/mixins/overlay'
 
     export default {
-        name: "ElPopover",
+        name: 'ElPopover',
         components: { ElPopoverOriginal },
         mixins: [overlayMixin],
         props: {
             // value: null,
             overlayClass: {
                 type: String,
-                default: "hasOverlay"
+                default: 'hasOverlay',
             },
             popperClass: String,
             iconClose: {
                 type: String,
-                default: "times"
+                default: 'times',
             },
             popperOptions: {
                 type: Object,
                 default: () => {
                     return {
-                        parent: "p",
-                        boundariesElement: "scrollParent",
+                        parent: 'p',
+                        boundariesElement: 'scrollParent',
                         positionFixed: false,
 
-                        preventOverflowOrder: ["right", "left", "bottom", "top"]
-                    };
-                }
-            }
+                        preventOverflowOrder: ['right', 'left', 'bottom', 'top'],
+                    }
+                },
+            },
         },
         // data() {
         //     return {
@@ -65,9 +65,9 @@
         // },
         computed: {
             $childAttrs() {
-                const { popperOptions, ...attrs } = this.$attrs;
-                return { ...attrs, popperOptions };
-            }
+                const { popperOptions, ...attrs } = this.$attrs
+                return { ...attrs, popperOptions }
+            },
         },
         // watch: {
         //     visible(value) {
@@ -99,8 +99,8 @@
             //         this.close();
             //     },
             close() {
-                this.$emit("input", false);
-            }
-        }
-    };
+                this.$emit('input', false)
+            },
+        },
+    }
 </script>

@@ -1,6 +1,6 @@
 <script>
     // el-messages
-    import ElMessages from './Messages';
+    import ElMessages from './Messages'
     // import '@/common/styles/defaults/messages.scss';
     // import 'element-ui/lib/theme-chalk/alert.css';
 
@@ -10,21 +10,21 @@
         data() {
             return {
                 messages: [],
-            };
+            }
         },
         methods: {
             message(message, opts) {
-                if (!opts) opts = {};
+                if (!opts) opts = {}
 
                 const options = {
                     text: message,
                     ...opts,
-                };
-                const items = this.messages.concat([]);
-                items.unshift(options);
-                this.messages = items;
+                }
+                const items = this.messages.concat([])
+                items.unshift(options)
+                this.messages = items
 
-                this.startMessageTimeout();
+                this.startMessageTimeout()
             },
             success(message, opts) {
                 this.message(
@@ -35,7 +35,7 @@
                         },
                         opts
                     )
-                );
+                )
             },
             info(message, opts) {
                 this.message(
@@ -46,7 +46,7 @@
                         },
                         opts
                     )
-                );
+                )
             },
             warning(message, opts) {
                 this.message(
@@ -57,7 +57,7 @@
                         },
                         opts
                     )
-                );
+                )
             },
             error(message, opts) {
                 this.message(
@@ -68,25 +68,23 @@
                         },
                         opts
                     )
-                );
+                )
             },
 
             startMessageTimeout() {
-                if (this.messageCloseTimeout)
-                    clearTimeout(this.messageCloseTimeout);
-                if (this.messages.length)
-                    this.messageCloseTimeout = setTimeout(this.popMessage, 1000);
+                if (this.messageCloseTimeout) clearTimeout(this.messageCloseTimeout)
+                if (this.messages.length) this.messageCloseTimeout = setTimeout(this.popMessage, 1000)
             },
             popMessage() {
-                const items = this.messages.concat([]);
-                items.pop();
-                this.messages = items;
+                const items = this.messages.concat([])
+                items.pop()
+                this.messages = items
 
-                this.startMessageTimeout();
+                this.startMessageTimeout()
             },
         },
         render() {
-            return <el-messages messages={this.messages} />;
+            return <el-messages messages={this.messages} />
         },
-    };
+    }
 </script>

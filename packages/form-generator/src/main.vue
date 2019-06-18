@@ -75,92 +75,92 @@
 
 <script>
     // @change="value => onChange(field, item.value)"
-    import ElInput from "element-ui/packages/input";
+    import ElInput from 'element-ui/packages/input'
 
-    import ElFormWrapper from "@websanova/element-ui-mobile/packages/form-wrapper";
+    import ElFormWrapper from '@websanova/element-ui-mobile/packages/form-wrapper'
 
     const componentsByType = {
         text: {
-            module: "el-input",
+            module: 'el-input',
             attrs: {
-                type: "text"
-            }
+                type: 'text',
+            },
         },
         textarea: {
-            module: "el-input",
+            module: 'el-input',
             attrs: {
-                type: "textarea"
-            }
+                type: 'textarea',
+            },
         },
         email: {
-            module: "el-input",
+            module: 'el-input',
             attrs: {
-                type: "email"
-            }
+                type: 'email',
+            },
         },
         integer: {
-            module: "el-input",
+            module: 'el-input',
             attrs: {
-                type: "number"
-            }
+                type: 'number',
+            },
         },
         float: {
-            module: "el-input",
+            module: 'el-input',
             attrs: {
-                type: "float"
-            }
+                type: 'float',
+            },
         },
         password: {
-            module: "el-input",
+            module: 'el-input',
             attrs: {
-                type: "password"
-            }
+                type: 'password',
+            },
         },
         percent: {
-            module: "el-input",
+            module: 'el-input',
             attrs: {
-                type: "percent"
-            }
+                type: 'percent',
+            },
         },
         url: {
-            module: "el-input",
+            module: 'el-input',
             attrs: {
-                type: "url"
-            }
+                type: 'url',
+            },
         },
         checkbox: {
-            module: "el-checkbox",
+            module: 'el-checkbox',
             attrs: {
-                label: "test"
-            }
+                label: 'test',
+            },
         },
         toggle: {
-            module: "el-switch",
-            attrs: {}
+            module: 'el-switch',
+            attrs: {},
         },
         range: {
-            module: "el-slider",
-            attrs: {}
+            module: 'el-slider',
+            attrs: {},
         },
         radio: {
-            module: "el-radio",
-            attrs: {}
+            module: 'el-radio',
+            attrs: {},
         },
         option: {
-            module: "el-select",
-            attrs: {}
+            module: 'el-select',
+            attrs: {},
         },
-        "select-remote": {
-            module: "el-select-remote",
+        'select-remote': {
+            module: 'el-select-remote',
             attrs: {
                 autofill: true,
-                clearable: true
-            }
-        }
-    };
+                clearable: true,
+            },
+        },
+    }
 
     export default {
-        name: "ElFormGenerator",
+        name: 'ElFormGenerator',
         components: { ElFormWrapper },
         props: {
             fields: Array,
@@ -170,95 +170,91 @@
                 default() {
                     return {
                         errors: {},
-                        body: {}
-                    };
-                }
-            }
+                        body: {},
+                    }
+                },
+            },
         },
         data() {
             return {
-                componentsByType: Object.assign(
-                    {},
-                    componentsByType,
-                    this.components || {}
-                )
-            };
+                componentsByType: Object.assign({}, componentsByType, this.components || {}),
+            }
         },
         watch: {
             body() {
                 // console.log("CHANGE", arguments);
                 // this.onChange();
-            }
+            },
         },
         computed: {
             body() {
-                return this.form.body;
-            }
+                return this.form.body
+            },
         },
 
         methods: {
             onFormCreated() {
-                this.$emit("created", this.form);
+                this.$emit('created', this.form)
             },
             onFormSubmit(form) {
                 //this.$emit("submit", form);
             },
             onFormSuccess(err, form) {
-                this.$emit("success", err, form);
+                this.$emit('success', err, form)
             },
             onFormError(err, form) {
-                this.$emit("error", err, form);
+                this.$emit('error', err, form)
             },
             onFormChange(form, prop, value) {
-                const field = this.fields.find(f => f.prop === prop);
+                const field = this.fields.find(f => f.prop === prop)
                 if (!field) {
-                    throw new Error(`field ${prop} not found !`);
+                    throw new Error(`field ${prop} not found !`)
                 }
-                this.onChange({ prop, type: field.type }, value);
+                this.onChange({ prop, type: field.type }, value)
             },
             onChange(field, value) {
-                const body = Object.assign({}, this.form.body);
+                const body = Object.assign({}, this.form.body)
 
                 // if (field.type === "integer") {
                 //     value = parseInt(value, 10);
                 // }
 
-                body[field.prop] = value;
-                this.form.body = body;
-                this.$emit("change", this.form, field, value);
+                body[field.prop] = value
+                this.form.body = body
+                this.$emit('change', this.form, field, value)
             },
             componentFromType(type) {
-                return this.componentsByType[type];
+                return this.componentsByType[type]
             },
             componentAttrs(field) {
                 if (!field.type) {
-                    console.error(`missing field type`, field);
+                    console.error(`missing field type`, field)
                 }
                 if (!this.componentsByType[field.type]) {
-                    throw new Error(`field of type "${field.type}" not found`);
+                    throw new Error(`field of type "${field.type}" not found`)
                 }
 
                 const attrs = Object.assign(
                     {},
                     (this.componentsByType[field.type] || {}).attrs || {},
                     field.attrs || {}
-                );
+                )
 
-                if (field.placeholder) attrs.placeholder = field.placeholder;
-                if (field.disabled) attrs.disabled = field.disabled;
-                if (field.clearable) attrs.clearable = field.clearable;
-                if (field.size) attrs.size = field.size;
-                if (field.max) attrs.max = field.max;
-                if (field.min) attrs.min = field.min;
-                if (field.step) attrs.step = field.step;
+                if (field.placeholder) attrs.placeholder = field.placeholder
+                if (field.disabled) attrs.disabled = field.disabled
+                if (field.clearable) attrs.clearable = field.clearable
+                if (field.size) attrs.size = field.size
+                if (field.max) attrs.max = field.max
+                if (field.min) attrs.min = field.min
+                if (field.step) attrs.step = field.step
 
-                if (field.showWordLimit) attrs.showWordLimit = field.showWordLimit;
+                if (field.showWordLimit) attrs.showWordLimit = field.showWordLimit
 
-                return attrs;
+                return attrs
             },
             onClearSelect(field, index) {
-                this.form.body[field.prop] = undefined;
-            }
-        }
-    };
+                this.form.body[field.prop] = undefined
+            },
+        },
+    }
 </script>

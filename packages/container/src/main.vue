@@ -22,7 +22,7 @@
 
 <script>
     export default {
-        name: "ElContainer",
+        name: 'ElContainer',
 
         props: {
             direction: String,
@@ -35,29 +35,28 @@
             scrollY: Boolean,
             shrink: {
                 type: Boolean,
-                default: true
+                default: true,
             },
             grow: {
                 type: Boolean,
-                default: true
-            }
+                default: true,
+            },
         },
 
         computed: {
             isVertical() {
-                if (this.direction === "vertical") {
-                    return true;
-                } else if (this.direction === "horizontal") {
-                    return false;
+                if (this.direction === 'vertical') {
+                    return true
+                } else if (this.direction === 'horizontal') {
+                    return false
                 }
                 return this.$slots && this.$slots.default
                     ? this.$slots.default.some(vnode => {
-                          const tag =
-                              vnode.componentOptions && vnode.componentOptions.tag;
-                          return tag === "el-header" || tag === "el-footer";
+                          const tag = vnode.componentOptions && vnode.componentOptions.tag
+                          return tag === 'el-header' || tag === 'el-footer'
                       })
-                    : false;
-            }
-        }
-    };
+                    : false
+            },
+        },
+    }
 </script>

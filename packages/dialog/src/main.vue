@@ -26,45 +26,45 @@
 </template>
 
 <script>
-    import ElDialogOriginal from "element-ui/packages/dialog";
-    import ElIconbutton from "@websanova/element-ui-mobile/packages/iconbutton";
+    import ElDialogOriginal from 'element-ui/packages/dialog'
+    import ElIconbutton from '@websanova/element-ui-mobile/packages/iconbutton'
 
     export default {
-        name: "ElDialog",
+        name: 'ElDialog',
         components: { ElDialogOriginal, ElIconbutton },
         props: {
             portal: {
                 type: String,
-                default: "dialog"
+                default: 'dialog',
             },
             showClose: {
                 type: Boolean,
-                default: false
+                default: false,
             },
             overlayClass: {
                 type: String,
-                default: "hasOverlay"
+                default: 'hasOverlay',
             },
             iconClose: {
                 type: String,
-                default: "times"
+                default: 'times',
             },
-            title: null
+            title: null,
         },
         computed: {
             _title: function(title) {
-                return title;
+                return title
             },
             $childAttrs() {
-                const { title, ...attrs } = this.$attrs;
-                return attrs;
-            }
+                const { title, ...attrs } = this.$attrs
+                return attrs
+            },
         },
         methods: {
             handleClose() {
-                if (this.$refs.dialog) this.$refs.dialog.handleClose();
-                this.$emit("close");
-            }
-        }
-    };
+                if (this.$refs.dialog) this.$refs.dialog.handleClose()
+                this.$emit('close')
+            },
+        },
+    }
 </script>
