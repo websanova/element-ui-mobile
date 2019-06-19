@@ -48,12 +48,30 @@
             class="el-scrollbar--fix"
         >
 
-        <el-radio-group
-            v-model="currentValue"
-            size="small"
-            @change="handleRadioChange"
-        >
+            <el-radio-group
+                v-model="_value"
+                size="small"
+                @change="handleRadioChange"
+                v-if="!multiselect"
+            >
+                <ul
+                    :style="{width: (width - 9) + 'px'}"
+                    class="el-multi-select__options"
+                >
+                    <li
+                        v-for="option in filteredOptions"
+                        :key="option[valueKey]"
+                        :value="option[valueKey]"
+                    >
+                        <el-radio
+                            :label="option[valueKey]"
+                        >{{ option[labelKey] }}</el-radio>
+                    </li>
+                </ul>
+            </el-radio-group>
+
             <ul
+                v-if="multiselect"
                 :style="{width: (width - 9) + 'px'}"
                 class="el-multi-select__options"
             >
@@ -63,17 +81,14 @@
                     :value="option[valueKey]"
                 >
                     <el-checkbox
-                        v-if="multiselect"
                         v-model="selection[option[valueKey]]"
                         @change="handleChange"
                     >{{ option[labelKey] }}</el-checkbox>
-                    <el-radio
-                        v-else
-                        :label="option[valueKey]"
-                    >{{ option[labelKey] }}</el-radio>
                 </li>
             </ul>
-            </el-radio-group>
+
+
+
         </el-scrollbar>
 
     </el-popover>
@@ -94,11 +109,7 @@
                 label: '',
                 search: '',
                 searchValue: '',
-                selection: {
-                    country: null,
-                    language: null,
-                    status: 'on',
-                },
+                selection: {},
                 filteredOptions: null,
                 initialLoaded: false,
             }
@@ -164,11 +175,8 @@
             this.search = this.initialSearch
             this.label = this.initialLabel
 
-            if (this.value) {
-                if (this.multiselect) {
-                    this.selection = this.getSelectionFromValue(this.value)
-                    this.updateLabel(this.value)
-                }
+            if (this.multiselect && this.value) {
+                this.update()
             }
 
             this.applySearch(this.initialSearch)
@@ -181,7 +189,7 @@
                 if (!value) return
 
                 if (this.multiselect) {
-                    this.selection = this.getSelectionFromValue(value)
+                    this.update()
                 }
             },
             searchValue(val) {
@@ -193,6 +201,10 @@
             },
         },
         computed: {
+            _value() {
+                if (!this.multiselect) return this.currentValue
+                return this.value
+            },
             _label() {
                 if (this.multiselect) return this.label
 
@@ -204,11 +216,18 @@
             },
         },
         methods: {
+            update() {
+                const selection = this.getSelectionFromValue(this.value)
+                // this.$set(this, 'selection', selection)
+                this.selection = selection
+                this.updateLabel(this.value)
+            },
             handleRadioChange(value) {
                 this.$emit('change', value)
             },
             handleChange() {
                 const values = this.getValuesFromSelection()
+
                 this.updateLabel(values)
                 this.$emit('change', values)
             },
@@ -226,6 +245,7 @@
             },
             getValuesFromSelection() {
                 const sel = {}
+
                 Object.entries(this.selection).forEach(item => {
                     if (item[1]) sel[item[0]] = true
                 })
@@ -270,24 +290,25 @@
                     selection[item.value] = true
                 })
 
-                this.$set(this, 'selection', selection)
+                // this.$set(this, 'selection', selection)
+                this.selection = selection
 
                 this.handleChange()
             },
             deselectAll() {
-                this.currentValue = null
-
-                if (!this.multiselect) {
+                if (this.multiselect) {
                     const selection = {}
                     this.filteredOptions.forEach(item => {
-                        selection[item[this.valueKey]] = false
+                        selection[item.value] = false
                     })
-
-                    this.$set(this, 'selection', selection)
-                    this.handleRadioChange()
+                    this.selection = selection
+                    // this.$set(this, 'selection', selection)
+                    this.handleChange()
+                    return
                 }
 
-                this.$emit('change', this.currentValue)
+                this.currentValue = null
+                this.handleRadioChange()
             },
         },
 
