@@ -9,7 +9,7 @@
             class="el-multi-select"
             slot="reference"
         >
-            <span>{{label}}</span>
+            <span>{{_label}}</span>
             <el-icon name="light/caret-down" />
         </div>
         <div class="el-multi-select__header">
@@ -39,6 +39,11 @@
             v-if="filteredOptions.length"
             class="el-scrollbar--fix"
         >
+        <el-radio-group
+            v-model="value"
+            size="small"
+            @change="handleRadioChange"
+        >
             <ul
                 :style="{width: (width - 9) + 'px'}"
                 class="el-multi-select__options"
@@ -49,11 +54,18 @@
                     :value="option.value"
                 >
                     <el-checkbox
+                        v-if="multiselect"
                         v-model="selection[option.value]"
                         @change="handleChange"
                     >{{ option.label }}</el-checkbox>
+                    <el-radio
+                        v-else
+                        :label="option.value"
+                        :value="option.value === value"
+                    >{{ option.label }}</el-radio>
                 </li>
             </ul>
+            </el-radio-group>
         </el-scrollbar>
 
     </el-popover>
@@ -73,12 +85,18 @@
                 label: '',
                 search: '',
                 searchValue: '',
-                selection: {},
+                selection: {
+                    country: null,
+                    language: null,
+                    status: 'on',
+                },
                 filteredOptions: null,
+                initialLoaded: false,
             }
         },
         props: {
             value: null,
+            multiselect: false,
             options: {
                 type: Array,
                 default() {
@@ -124,15 +142,38 @@
                 },
             },
         },
+        created() {
+            this.search = this.initialSearch
+            this.label = this.initialLabel
+
+            if (this.value) {
+                if (this.multiselect) {
+                    this.selection = this.getSelectionFromValue(this.value)
+                    this.updateLabel(this.value)
+                }
+            }
+
+            this.applySearch(this.initialSearch)
+            if (this.options && this.options.length) {
+                if (this.multiselect && !this.initialLoaded) {
+                    this.selectAll()
+                    this.initialLoaded = true
+                }
+            }
+        },
         watch: {
-            // selection: function() {
-            //     this.handleChange()
-            // },
-            value: function(value) {
-                if (!value) return
-                this.selection = this.getSelectionFromValue(value)
+            options(value) {
+                this.applySearch(this.searchValue)
+                if (this.multiselect && !this.initialLoaded) {
+                    this.selectAll()
+                    this.initialLoaded = true
+                }
             },
-            searchValue: function(val) {
+            value(value) {
+                if (!value) return
+                if (this.multiselect) this.selection = this.getSelectionFromValue(value)
+            },
+            searchValue(val) {
                 val = val.trim()
                 clearTimeout(this.changeTimeout)
                 this.changeTimeout = setTimeout(() => {
@@ -140,7 +181,21 @@
                 }, this.inputDelay)
             },
         },
+        computed: {
+            _label() {
+                if (this.multiselect) return this.label
+
+                const item = this.options.find(item => item.value === this.value)
+
+                if (!item) return this.initialLabel
+
+                return item.label
+            },
+        },
         methods: {
+            handleRadioChange(value) {
+                this.$emit('change', value)
+            },
             handleChange() {
                 const values = this.getValuesFromSelection()
                 this.updateLabel(values)
@@ -167,15 +222,17 @@
                 return Object.keys(sel)
             },
             updateLabel(values) {
-                if (values.length === 1) {
-                    const match = this.options.find(item => item.value === values[0])
-                    this.label = match ? match.label : this.initialLabel
-                } else if (values.length === this.options.length) {
-                    this.label = this.allLabel
-                } else if (values.length > 1) {
-                    this.label = this.multipleLabel
-                } else {
-                    this.label = this.initialLabel
+                if (this.multiselect) {
+                    if (values.length === 1) {
+                        const match = this.options.find(item => item.value === values[0])
+                        this.label = match ? match.label : this.initialLabel
+                    } else if (values.length === this.options.length) {
+                        this.label = this.allLabel
+                    } else if (values.length > 1) {
+                        this.label = this.multipleLabel
+                    } else {
+                        this.label = this.initialLabel
+                    }
                 }
             },
             applySearch(search) {
@@ -201,30 +258,28 @@
                 })
                 this.selection = selection
                 // this.$set(this, 'selection', selection)
-                this.handleChange()
+                if (this.multiselect) {
+                    this.handleChange()
+                } else {
+                    this.handleRadioChange()
+                }
             },
             deselectAll() {
+                this.value = null
                 const selection = {}
                 this.filteredOptions.forEach(item => {
                     selection[item.value] = false
                 })
                 this.selection = selection
                 // this.$set(this, 'selection', selection)
-                this.handleChange()
+                if (this.multiselect) {
+                    this.handleChange()
+                } else {
+                    this.handleRadioChange()
+                }
             },
         },
-        created() {
-            this.search = this.initialSearch
-            this.label = this.initialLabel
 
-            if (this.value) {
-                this.selection = this.getSelectionFromValue(this.value)
-                this.updateLabel(this.value)
-            }
-
-            if (!this.options) throw new Error('must supply options to el-multi-select')
-            this.applySearch(this.initialSearch)
-        },
         beforeDestroy() {
             clearTimeout(this.changeTimeout)
         },
