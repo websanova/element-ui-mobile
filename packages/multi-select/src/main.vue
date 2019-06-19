@@ -172,24 +172,17 @@
             }
 
             this.applySearch(this.initialSearch)
-            if (this.options && this.options.length) {
-                if (this.multiselect && !this.initialLoaded) {
-                    this.selectAll()
-                    this.initialLoaded = true
-                }
-            }
         },
         watch: {
             options(value) {
                 this.applySearch(this.searchValue)
-                if (this.multiselect && !this.initialLoaded) {
-                    this.selectAll()
-                    this.initialLoaded = true
-                }
             },
             value(value) {
                 if (!value) return
-                if (this.multiselect) this.selection = this.getSelectionFromValue(value)
+
+                if (this.multiselect) {
+                    this.selection = this.getSelectionFromValue(value)
+                }
             },
             searchValue(val) {
                 val = val.trim()
@@ -270,29 +263,31 @@
                 this.$set(this, 'filteredOptions', filteredOptions)
             },
             selectAll() {
+                if (!this.multiselect) return
+
                 const selection = {}
                 this.filteredOptions.forEach(item => {
                     selection[item.value] = true
                 })
-                this.selection = selection
-                // this.$set(this, 'selection', selection)
-                if (this.multiselect) {
-                    this.handleChange()
-                }
+
+                this.$set(this, 'selection', selection)
+
+                this.handleChange()
             },
             deselectAll() {
-                this.value = null
-                const selection = {}
-                this.filteredOptions.forEach(item => {
-                    selection[item[this.valueKey]] = false
-                })
-                this.selection = selection
-                // this.$set(this, 'selection', selection)
-                if (this.multiselect) {
-                    this.handleChange()
-                } else {
+                this.currentValue = null
+
+                if (!this.multiselect) {
+                    const selection = {}
+                    this.filteredOptions.forEach(item => {
+                        selection[item[this.valueKey]] = false
+                    })
+
+                    this.$set(this, 'selection', selection)
                     this.handleRadioChange()
                 }
+
+                this.$emit('change', this.currentValue)
             },
         },
 
