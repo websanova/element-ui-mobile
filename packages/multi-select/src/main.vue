@@ -14,10 +14,11 @@
         </div>
         <div class="el-multi-select__header">
             <el-input
+                v-if="searchEnabled"
                 placeholder="Search..."
                 v-model="searchValue"
             />
-            <div class="el-multi-select__toolbar">
+            <div class="el-multi-select__toolbar" v-if="multiselect">
                 <el-button
                     type="text"
                     @click="this.selectAll"
@@ -27,6 +28,13 @@
                     type="text"
                     @click="this.deselectAll"
                 >Clear all</el-button>
+            </div>
+            <div class="el-multi-select__toolbar" v-if="!multiselect">
+                <div class="el-multi-select__toolbar-spacer"></div>
+                <el-button
+                    type="text"
+                    @click="this.deselectAll"
+                >Clear</el-button>
             </div>
         </div>
 
@@ -39,8 +47,9 @@
             v-if="filteredOptions.length"
             class="el-scrollbar--fix"
         >
+
         <el-radio-group
-            v-model="value"
+            v-model="currentValue"
             size="small"
             @change="handleRadioChange"
         >
@@ -50,19 +59,18 @@
             >
                 <li
                     v-for="option in filteredOptions"
-                    :key="option.value"
-                    :value="option.value"
+                    :key="option[valueKey]"
+                    :value="option[valueKey]"
                 >
                     <el-checkbox
                         v-if="multiselect"
-                        v-model="selection[option.value]"
+                        v-model="selection[option[valueKey]]"
                         @change="handleChange"
-                    >{{ option.label }}</el-checkbox>
+                    >{{ option[labelKey] }}</el-checkbox>
                     <el-radio
                         v-else
-                        :label="option.value"
-                        :value="option.value === value"
-                    >{{ option.label }}</el-radio>
+                        :label="option[valueKey]"
+                    >{{ option[labelKey] }}</el-radio>
                 </li>
             </ul>
             </el-radio-group>
@@ -82,6 +90,7 @@
         name: 'ElMultiSelect',
         data() {
             return {
+                currentValue: null,
                 label: '',
                 search: '',
                 searchValue: '',
@@ -97,6 +106,7 @@
         props: {
             value: null,
             multiselect: false,
+            searchEnabled: true,
             options: {
                 type: Array,
                 default() {
@@ -128,6 +138,14 @@
             height: {
                 type: String,
                 default: '250px',
+            },
+            labelKey: {
+                type: String,
+                default: 'label',
+            },
+            valueKey: {
+                type: String,
+                default: 'value',
             },
             popperOptions: {
                 type: Object,
@@ -185,11 +203,11 @@
             _label() {
                 if (this.multiselect) return this.label
 
-                const item = this.options.find(item => item.value === this.value)
+                const item = this.options.find(item => item[this.valueKey] === this.value)
 
                 if (!item) return this.initialLabel
 
-                return item.label
+                return item[this.labelKey]
             },
         },
         methods: {
@@ -224,8 +242,8 @@
             updateLabel(values) {
                 if (this.multiselect) {
                     if (values.length === 1) {
-                        const match = this.options.find(item => item.value === values[0])
-                        this.label = match ? match.label : this.initialLabel
+                        const match = this.options.find(item => item[this.valueKey] === values[0])
+                        this.label = match ? match[this.labelKey] : this.initialLabel
                     } else if (values.length === this.options.length) {
                         this.label = this.allLabel
                     } else if (values.length > 1) {
@@ -242,7 +260,7 @@
                 } else {
                     if (!this.caseSensitive) search = search.toLowerCase()
                     filteredOptions = this.options.filter(item => {
-                        let val = item.label
+                        let val = item[this.labelKey]
                         if (!this.caseSensitive) val = val.toLowerCase()
                         let result = fuzzysearch(search, val)
                         return result
@@ -260,15 +278,13 @@
                 // this.$set(this, 'selection', selection)
                 if (this.multiselect) {
                     this.handleChange()
-                } else {
-                    this.handleRadioChange()
                 }
             },
             deselectAll() {
                 this.value = null
                 const selection = {}
                 this.filteredOptions.forEach(item => {
-                    selection[item.value] = false
+                    selection[item[this.valueKey]] = false
                 })
                 this.selection = selection
                 // this.$set(this, 'selection', selection)
