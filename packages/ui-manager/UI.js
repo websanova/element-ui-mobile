@@ -131,6 +131,7 @@ export default {
         let general = errors.find(err => err.field === 'general')
         let msg = general ? general.msg : errors[0].msg
 
+        console.error(msg)
         return this.manager.message({
             type: 'error',
             message: msg,
