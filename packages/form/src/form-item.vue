@@ -10,7 +10,7 @@
     sizeClass ? 'el-form-item--' + sizeClass : ''
   ]">
     <label :for="labelFor" class="el-form-item__label" :style="labelStyle" v-if="label || $slots.label">
-      <slot name="label">{{label + form.labelSuffix}} {{JSON.stringify(initialValue)}} - {{JSON.stringify(fieldValue)}}</slot>
+      <slot name="label">{{label + form.labelSuffix}}</slot>
     </label>
     <div class="el-form-item__content" :style="contentStyle">
       <slot></slot>
