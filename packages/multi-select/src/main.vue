@@ -81,8 +81,8 @@
                     :value="option[valueKey]"
                 >
                     <el-checkbox
-                        v-model="selection[option[valueKey]]"
-                        @change="handleChange"
+                        :value="itemSelected(option)"
+                        @change="(v) => handleCheckboxChange(option, v)"
                     >{{ option[labelKey] }}</el-checkbox>
                 </li>
             </ul>
@@ -112,12 +112,14 @@
                 selection: {},
                 filteredOptions: null,
                 initialLoaded: false,
+                totalSelected: 0,
             }
         },
         props: {
             value: null,
             multiselect: false,
             searchEnabled: true,
+            noneAsAllSelected: false,
             options: {
                 type: Array,
                 default() {
@@ -216,6 +218,15 @@
             },
         },
         methods: {
+            itemSelected(option) {
+                if (
+                    (this.noneAsAllSelected && this.totalSelected === 0) ||
+                    this.totalSelected >= this.options.length
+                ) {
+                    return true
+                }
+                return this.selection[option[this.valueKey]]
+            },
             update() {
                 const selection = this.getSelectionFromValue(this.value)
                 // this.$set(this, 'selection', selection)
@@ -225,8 +236,27 @@
             handleRadioChange(value) {
                 this.$emit('change', value)
             },
+            handleCheckboxChange(option, value) {
+                if (this.noneAsAllSelected && this.totalSelected === 0) value = true
+                this.selection[option.value] = value
+
+                let values = this.getValuesFromSelection()
+                this.totalSelected = values.length
+
+                if (this.noneAsAllSelected && this.totalSelected >= this.options.length) {
+                    values = []
+                }
+
+                this.updateLabel(values)
+                this.$emit('change', values)
+            },
             handleChange() {
-                const values = this.getValuesFromSelection()
+                let values = this.getValuesFromSelection()
+                this.totalSelected = values.length
+
+                if (this.noneAsAllSelected && this.totalSelected >= this.options.length) {
+                    values = []
+                }
 
                 this.updateLabel(values)
                 this.$emit('change', values)
