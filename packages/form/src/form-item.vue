@@ -10,7 +10,7 @@
     sizeClass ? 'el-form-item--' + sizeClass : ''
   ]">
     <label :for="labelFor" class="el-form-item__label" :style="labelStyle" v-if="label || $slots.label">
-      <slot name="label">{{label + form.labelSuffix}}</slot>
+      <slot name="label">{{label + form.labelSuffix}} {{JSON.stringify(initialValue)}} - {{JSON.stringify(fieldValue)}}</slot>
     </label>
     <div class="el-form-item__content" :style="contentStyle">
       <slot></slot>
@@ -56,6 +56,7 @@
         inject: ['elForm'],
 
         props: {
+            debug: Boolean,
             label: String,
             labelWidth: String,
             prop: String,
@@ -242,7 +243,9 @@
                     prop.o[prop.k] = this.initialValue
                 }
 
+                this.resetting = true
                 this.broadcast('ElTimeSelect', 'fieldReset', this.initialValue)
+                this.resetting = false
             },
             updateField() {
                 // set new initial value
@@ -251,14 +254,15 @@
 
                 if (Array.isArray(value)) {
                     this.initialValue = value.concat([])
-                } else if (typeof value === 'string') {
-                    this.initialValue = value
-                } else if (typeof value === 'number') {
+                } else if (typeof value === 'object') {
+                    this.initialValue = Object.assign({}, value)
+                } else {
                     this.initialValue = value
                 }
-
-                this.resetting = true
-                this.resetField()
+            },
+            syncField() {
+                // set new initial value
+                let prop = getPropByPath(this.form.model, this.prop, true)
             },
             getRules() {
                 let formRules = this.form.rules
@@ -288,18 +292,15 @@
                 this.validate('blur')
             },
             onFieldChange() {
-                if (this.resetting) return
+                if (this.resetting || this.updating) return
                 if (this.validateDisabled) {
                     this.validateDisabled = false
                     return
                 }
 
-                // if (!this.resetting) {
                 this.validate('change')
                 let prop = getPropByPath(this.form.model, this.prop, true)
                 this.dispatch('ElForm', 'el.form.change', [this, prop.k, prop.v])
-                // }
-                // this.resetting = false;
             },
         },
         mounted() {
@@ -307,11 +308,11 @@
                 this.dispatch('ElForm', 'el.form.addField', [this])
 
                 let initialValue
-                if (this.fieldValue) {
+                if (this.fieldValue !== undefined) {
                     if (Array.isArray(initialValue)) {
                         initialValue = [].concat(this.fieldValue)
                     } else if (typeof this.fieldValue === 'object') {
-                        initialValue = Object.assign(this.fieldValue)
+                        initialValue = Object.assign({}, this.fieldValue)
                     } else {
                         initialValue = this.fieldValue
                     }
@@ -326,7 +327,6 @@
 
                 if (rules.length || this.required !== undefined) {
                     this.$on('el.form.blur', this.onFieldBlur)
-                    // this.$on("el.form.change", this.onFieldChange);
                 }
             }
         },

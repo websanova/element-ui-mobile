@@ -67,6 +67,8 @@
             }
 
             this.form.reset = this.reset
+            this.form.update = this.update
+            this.form.sync = this.sync
             this.form.submit = this.submit
 
             this.form.success = res => {
@@ -74,8 +76,8 @@
                 this.form.loading = false
 
                 if (this.form.clear === true) {
-                    // this.$refs.form.resetFields();
-                    this.reset()
+                    this.$refs.form.resetFields()
+                    // this.update()
                     this.form.body = {}
                 }
 
@@ -137,7 +139,7 @@
             },
 
             change(form, field, value) {
-                this.syncState()
+                this.$refs.form.syncState()
                 this.$emit('change', this.form, field, value)
             },
 
@@ -153,6 +155,14 @@
                 this.submit()
             },
 
+            update() {
+                if (this.$refs.form) this.$refs.form.updateFields()
+                this.syncState()
+            },
+            sync() {
+                if (this.$refs.form) this.$refs.form.syncFields()
+                this.syncState()
+            },
             submit() {
                 this.form.status = 'loading'
                 this.form.loading = true

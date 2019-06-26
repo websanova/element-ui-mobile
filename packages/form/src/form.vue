@@ -8,6 +8,7 @@
 </template>
 <script>
     import objectAssign from 'element-ui/src/utils/merge'
+    import { setTimeout } from 'timers'
 
     export default {
         name: 'ElForm',
@@ -57,6 +58,7 @@
         data() {
             return {
                 fields: [],
+                resetting: false,
             }
         },
         created() {
@@ -72,6 +74,9 @@
                 }
             })
             this.$on('el.form.change', (changedField, prop) => {
+                // don't emit any changes if the change happened because of a reset
+                if (this.resetting) return
+
                 this.$emit('change', this.form, prop, changedField.fieldValue)
             })
         },
@@ -97,9 +102,13 @@
                     console.warn('[Element Warn][Form]model is required for resetFields to work.')
                     return
                 }
+                this.resetting = true
                 this.fields.forEach(field => {
                     field.resetField()
                 })
+                setTimeout(() => {
+                    this.resetting = false
+                }, 10)
             },
             updateFields() {
                 if (!this.model) {
@@ -109,6 +118,12 @@
                 this.fields.forEach(field => {
                     field.updateField()
                 })
+            },
+            syncFields() {
+                if (!this.model) {
+                    console.warn('[Element Warn][Form]model is required for syncFields to work.')
+                    return
+                }
             },
             clearValidate(props = []) {
                 const fields = props.length

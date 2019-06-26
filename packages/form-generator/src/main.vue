@@ -180,12 +180,7 @@
                 componentsByType: Object.assign({}, componentsByType, this.components || {}),
             }
         },
-        watch: {
-            body() {
-                // console.log("CHANGE", arguments);
-                // this.onChange();
-            },
-        },
+
         computed: {
             body() {
                 return this.form.body
