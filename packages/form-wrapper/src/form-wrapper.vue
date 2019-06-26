@@ -139,7 +139,7 @@
             },
 
             change(form, field, value) {
-                this.$refs.form.syncState()
+                this.syncState()
                 this.$emit('change', this.form, field, value)
             },
 
