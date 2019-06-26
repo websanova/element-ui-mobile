@@ -14,6 +14,7 @@
             type="number"
             placeholder="Filter Value..."
             v-model.lazy="inputValue"
+            clearable
         />
     </div>
 </template>
