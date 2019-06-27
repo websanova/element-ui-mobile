@@ -50,6 +50,9 @@ $id: el-spacer;
 
     // -- Default (horizontal mode)
     &:not(#{$id}--vertical):not(#{$id}--grid) {
+        > .el-spacer__item {
+            display: inline-block;
+        }
         > * {
             margin-right: $el-spacer-spacing-hor;
             &:last-child {
@@ -60,6 +63,9 @@ $id: el-spacer;
 
     // -- Vertical mode
     &--vertical {
+        > .el-spacer__item {
+            display: block;
+        }
         > * {
             margin-bottom: $el-spacer-spacing-ver;
             &:last-child {
@@ -70,6 +76,9 @@ $id: el-spacer;
 
     // -- Grid mode
     &--grid {
+        > .el-spacer__item {
+            display: inline-block;
+        }
         > * {
             margin-right: $el-spacer-spacing-hor;
             margin-bottom: $el-spacer-spacing-ver;

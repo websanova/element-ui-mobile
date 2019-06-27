@@ -219,10 +219,7 @@
         },
         methods: {
             itemSelected(option) {
-                if (
-                    (this.noneAsAllSelected && this.totalSelected === 0) ||
-                    this.totalSelected >= this.options.length
-                ) {
+                if (this.noneAsAllSelected && this.totalSelected >= this.options.length) {
                     return true
                 }
                 return this.selection[option[this.valueKey]]

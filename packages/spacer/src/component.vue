@@ -12,9 +12,11 @@
             debug: Boolean,
             grid: Boolean,
             center: Boolean,
+            vcenter: Boolean,
             size: String,
         },
         render(createElement) {
+            console.log(this)
             var list = []
             this.$slots.default.forEach((element, index) => {
                 if (element.tag) {
@@ -42,6 +44,7 @@
                         [`${styleId}--inline-flex`]: this.inlineFlex,
                         [`${styleId}--inline`]: this.inline,
                         [`${styleId}--center`]: this.center,
+                        [`${styleId}--valign-center`]: this.vcenter,
                         [`${styleId}--wrap`]: this.wrap,
                         [`${styleId}--nowrap`]: this.nowrap,
                         [`${styleId}--debug`]: this.debug,
