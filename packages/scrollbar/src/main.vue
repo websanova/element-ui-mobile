@@ -18,6 +18,14 @@
             wrapClass: {},
             viewClass: {},
             viewStyle: {},
+            hscroll: {
+                type: Boolean,
+                default: true,
+            },
+            vscroll: {
+                type: Boolean,
+                default: true,
+            },
             noresize: Boolean, // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
             tag: {
                 type: String,
@@ -85,8 +93,8 @@
             if (!this.native) {
                 nodes = [
                     wrap,
-                    <Bar move={this.moveX} size={this.sizeWidth} />,
-                    <Bar vertical move={this.moveY} size={this.sizeHeight} />,
+                    this.hscroll && <Bar move={this.moveX} size={this.sizeWidth} />,
+                    this.vscroll && <Bar vertical move={this.moveY} size={this.sizeHeight} />,
                 ]
             } else {
                 nodes = [
