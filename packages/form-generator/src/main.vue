@@ -33,7 +33,9 @@
                 v-else-if="field.type === 'select-remote'"
                 :url="field.url"
                 :placeholder="field.placeholder"
+                :autofill="true"
                 @clear="onClearSelect(field, index)"
+                v-bind="componentAttrs(field)"
             >
 
             </el-select-remote>
@@ -177,7 +179,7 @@
         },
         data() {
             return {
-                componentsByType: Object.assign({}, componentsByType, this.components || {}),
+                componentsByType: componentsByType,
             }
         },
 
@@ -229,6 +231,12 @@
                     throw new Error(`field of type "${field.type}" not found`)
                 }
 
+                console.log(
+                    'this.componentsByType[field.type]',
+                    field.type,
+                    this.componentsByType[field.type]
+                )
+
                 const attrs = Object.assign(
                     {},
                     (this.componentsByType[field.type] || {}).attrs || {},
@@ -244,7 +252,7 @@
                 if (field.step) attrs.step = field.step
 
                 if (field.showWordLimit) attrs.showWordLimit = field.showWordLimit
-
+                console.log('attrs', attrs)
                 return attrs
             },
             onClearSelect(field, index) {
