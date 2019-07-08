@@ -1,7 +1,7 @@
 <template>
     <div class="el-card--ext"
         :class="{
-            'is-noscroll': scrollbar === false,
+            'is-custom-scroll': scrollbar,
             ['is-' + shadow + '-shadow']: shadow,
             'is-always-shadow': !shadow
         }"
@@ -24,7 +24,10 @@
         name: 'ElCard',
         props: {
             title: String,
-            scrollbar: Boolean,
+            scrollbar: {
+                type: Boolean,
+                default: true,
+            },
             bodyStyle: {},
             shadow: {
                 type: String,

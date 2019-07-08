@@ -6,7 +6,7 @@
     border-radius: $--card-border-radius;
     border: 1px solid $--card-border-color;
     background-color: $--color-white;
-    overflow: hidden;
+
     color: $--color-text-primary;
     transition: 0.3s;
 
@@ -57,7 +57,7 @@
         }
         .el-scrollbar__view {
             height: 100%;
-            padding: $--card-padding;
+            // padding: $--card-padding;
         }
     }
 
@@ -137,7 +137,7 @@
         }
     }
 
-    @include when(noscroll) {
+    @include when(custom-scroll) {
         @include e(body) {
             overflow: hidden;
         }
