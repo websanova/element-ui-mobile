@@ -63,6 +63,7 @@
                 <template slot="append" v-if="field.type === 'percent'">%</template>
                 <template slot="append" v-if="field.type === 'email'"><el-icon name="light/envelope" /></template>
                 <template slot="append" v-if="field.type === 'url'"><el-icon name="light/globe" /></template>
+
             </el-input>
 
             <component
@@ -92,6 +93,18 @@
             module: 'el-input',
             attrs: {
                 type: 'textarea',
+            },
+        },
+        email: {
+            module: 'el-input',
+            attrs: {
+                type: 'email',
+            },
+        },
+        phone: {
+            module: 'el-input',
+            attrs: {
+                type: 'phone',
             },
         },
         email: {
@@ -231,12 +244,6 @@
                     throw new Error(`field of type "${field.type}" not found`)
                 }
 
-                console.log(
-                    'this.componentsByType[field.type]',
-                    field.type,
-                    this.componentsByType[field.type]
-                )
-
                 const attrs = Object.assign(
                     {},
                     (this.componentsByType[field.type] || {}).attrs || {},
@@ -252,7 +259,6 @@
                 if (field.step) attrs.step = field.step
 
                 if (field.showWordLimit) attrs.showWordLimit = field.showWordLimit
-                console.log('attrs', attrs)
                 return attrs
             },
             onClearSelect(field, index) {
