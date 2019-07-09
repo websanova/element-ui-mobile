@@ -10,7 +10,7 @@
     >
         <slot></slot>
         <p
-            class="el-form__error text-center"
+            class="el-form__error el-form__error-general text-center"
             v-if="form.errors.general"
         >
             {{form.errors.general}}
