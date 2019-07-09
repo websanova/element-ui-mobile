@@ -173,11 +173,6 @@
                             mode: 'form',
                             footer: () => (
                                 <div>
-                                    {this.form && this.form.errors.general && (
-                                        <div class="el-form__error text-center">
-                                            {this.form.errors.general}
-                                        </div>
-                                    )}
                                     {opts.cancel && (
                                         <el-button on-click={this.handleClose}>
                                             {opts.cancelText || 'Cancel'}
@@ -186,7 +181,6 @@
                                     <el-button
                                         type="primary"
                                         loading={this.form && this.form.loading}
-                                        disabled={this.form && this.form.hasValidationError}
                                         on-click={this.handleClickSubmit}
                                     >
                                         {opts.saveText || 'Submit'}
@@ -204,9 +198,9 @@
                     title: title || 'Alert',
                     class: 'el-dialog__wrapper el-dialog__wrapper--flex',
                     customClass: `
-                                                                                            el-dialog--system
-                                                                                            el-dialog--alert
-                                                                                        `,
+                                                                                                    el-dialog--system
+                                                                                                    el-dialog--alert
+                                                                                                `,
                     queue: true,
                     enterToClose: true,
                     showClose: false,
