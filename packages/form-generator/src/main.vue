@@ -1,170 +1,8 @@
-<template>
-    <el-form-wrapper
-        :form="form"
-        @change="onFormChange"
-        @created="onFormCreated"
-        @submit="onFormSubmit"
-        @success="onFormSuccess"
-        @error="onFormError"
-        v-bind="$attrs"
-    >
-        <el-form-item
-            v-for="(field, index) in fields"
-            :key="index"
-            :label="field.title"
-            :error="form.errors[field.prop]"
-            :prop="field.prop"
-        >
-
-            <el-select
-                v-model="form.body[field.prop]"
-                v-if="field.type === 'option'"
-            >
-                <el-option
-                    v-for="item in field.options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                ></el-option>
-            </el-select>
-
-            <el-select-remote
-                v-model="form.body[field.prop]"
-                v-else-if="field.type === 'select-remote'"
-                :url="field.url"
-                :placeholder="field.placeholder"
-                :autofill="true"
-                @clear="onClearSelect(field, index)"
-                v-bind="componentAttrs(field)"
-            >
-
-            </el-select-remote>
-
-            <div
-                v-else-if="field.type === 'radio'"
-            >
-                <el-radio
-                    v-for="item in field.options"
-                    :key="item.value"
-                    :label="item.value"
-                    :value="form.body[field.prop]"
-                >{{item.label}}</el-radio>
-            </div>
-
-
-            <el-input
-                v-else-if="
-                    field.type === 'percent' ||
-                    field.type === 'email' ||
-                    field.type === 'url'
-                "
-                v-model="form.body[field.prop]"
-            >
-                <template slot="append" v-if="field.type === 'percent'">%</template>
-                <template slot="append" v-if="field.type === 'email'"><el-icon name="light/envelope" /></template>
-                <template slot="append" v-if="field.type === 'url'"><el-icon name="light/globe" /></template>
-
-            </el-input>
-
-            <component
-                v-else-if="componentAttrs(field)"
-                v-model="form.body[field.prop]"
-                :is="(componentFromType(field.type) || {}).module"
-                v-bind="componentAttrs(field)"
-            ></component>
-        </el-form-item>
-    </el-form-wrapper>
-</template>
-
 <script>
-    // @change="value => onChange(field, item.value)"
     import ElInput from 'element-ui/packages/input'
-
     import ElFormWrapper from '@websanova/element-ui-mobile/packages/form-wrapper'
 
     const componentsByType = {
-        text: {
-            module: 'el-input',
-            attrs: {
-                type: 'text',
-            },
-        },
-        textarea: {
-            module: 'el-input',
-            attrs: {
-                type: 'textarea',
-            },
-        },
-        email: {
-            module: 'el-input',
-            attrs: {
-                type: 'email',
-            },
-        },
-        phone: {
-            module: 'el-input',
-            attrs: {
-                type: 'phone',
-            },
-        },
-        email: {
-            module: 'el-input',
-            attrs: {
-                type: 'email',
-            },
-        },
-        integer: {
-            module: 'el-input',
-            attrs: {
-                type: 'number',
-            },
-        },
-        float: {
-            module: 'el-input',
-            attrs: {
-                type: 'float',
-            },
-        },
-        password: {
-            module: 'el-input',
-            attrs: {
-                type: 'password',
-            },
-        },
-        percent: {
-            module: 'el-input',
-            attrs: {
-                type: 'percent',
-            },
-        },
-        url: {
-            module: 'el-input',
-            attrs: {
-                type: 'url',
-            },
-        },
-        checkbox: {
-            module: 'el-checkbox',
-            attrs: {
-                label: 'test',
-            },
-        },
-        toggle: {
-            module: 'el-switch',
-            attrs: {},
-        },
-        range: {
-            module: 'el-slider',
-            attrs: {},
-        },
-        radio: {
-            module: 'el-radio',
-            attrs: {},
-        },
-        option: {
-            module: 'el-select',
-            attrs: {},
-        },
         'select-remote': {
             module: 'el-select-remote',
             attrs: {
@@ -180,6 +18,10 @@
         props: {
             fields: Array,
             components: Object,
+            reset: Boolean,
+            resetText: String,
+            save: Boolean,
+            saveText: String,
             form: {
                 type: Object,
                 default() {
@@ -237,33 +79,215 @@
                 return this.componentsByType[type]
             },
             componentAttrs(field) {
-                if (!field.type) {
-                    console.error(`missing field type`, field)
-                }
-                if (!this.componentsByType[field.type]) {
-                    throw new Error(`field of type "${field.type}" not found`)
-                }
+                const attrs = Object.assign({}, field.attrs || {})
 
-                const attrs = Object.assign(
-                    {},
-                    (this.componentsByType[field.type] || {}).attrs || {},
-                    field.attrs || {}
-                )
+                if (field.placeholder !== undefined) attrs.placeholder = field.placeholder
+                if (field.disabled !== undefined) attrs.disabled = field.disabled
+                if (field.clearable !== undefined) attrs.clearable = field.clearable
+                if (field.size !== undefined) attrs.size = field.size
+                if (field.max !== undefined) attrs.max = field.max
+                if (field.min !== undefined) attrs.min = field.min
+                if (field.step !== undefined) attrs.step = field.step
+                if (field.showWordLimit !== undefined) attrs.showWordLimit = field.showWordLimit
 
-                if (field.placeholder) attrs.placeholder = field.placeholder
-                if (field.disabled) attrs.disabled = field.disabled
-                if (field.clearable) attrs.clearable = field.clearable
-                if (field.size) attrs.size = field.size
-                if (field.max) attrs.max = field.max
-                if (field.min) attrs.min = field.min
-                if (field.step) attrs.step = field.step
-
-                if (field.showWordLimit) attrs.showWordLimit = field.showWordLimit
                 return attrs
             },
             onClearSelect(field, index) {
                 this.form.body[field.prop] = undefined
             },
+            handleClickSubmit() {
+                if (this.form) {
+                    this.form.submit()
+                }
+                this.$emit('submit')
+            },
+            handleReset() {
+                if (this.form) {
+                    this.form.reset()
+                }
+                this.$emit('reset')
+            },
+        },
+
+        render() {
+            const attributes = {
+                attrs: this.$attrs,
+            }
+
+            return (
+                <el-form-wrapper
+                    form={this.form}
+                    on-change={this.onFormChange}
+                    on-created={this.onFormCreated}
+                    on-submit={this.onFormSubmit}
+                    on-success={this.onFormSuccess}
+                    on-error={this.onFormError}
+                    {...attributes}
+                >
+                    {this.fields.map((field, index) => {
+                        // console.log('field', field)
+                        // console.log('TEST', this.componentAttrs(field))
+                        const compAttrs = {
+                            // on: {
+                            //     input: v => {
+                            //         console.log('input', v)
+                            //         this.form.body[field.prop] = v
+                            //     },
+                            // },
+                            // props: {
+                            //     value: this.form.body[field.prop],
+                            // },
+
+                            attrs: this.componentAttrs(field),
+                            // model: {
+                            //     value: this.form.body[field.prop],
+                            //     callback: value => {
+                            //         this.form.body[field.prop] = value
+                            //     },
+                            // },
+                        }
+
+                        let compDef = this.componentFromType(field.type) || {}
+
+                        let Component
+
+                        switch (field.type) {
+                            case 'text':
+                            case 'phone':
+                            case 'password':
+                            case 'percent':
+                            case 'url':
+                            case 'email':
+                            case 'textarea':
+                                Component = (
+                                    <el-input
+                                        type={field.type}
+                                        v-model={this.form.body[field.prop]}
+                                        {...compAttrs}
+                                    />
+                                )
+                                break
+                            // case 'email':
+                            //     Component = (
+                            //         <el-input type={field.type} v-model={this.form.body[field.prop]}>
+                            //             <template slot="append" v-if="field.type === 'email'">
+                            //                 <el-icon name="regular/envelope" />
+                            //             </template>
+                            //         </el-input>
+                            //     )
+                            //     break
+                            case 'float':
+                            case 'integer':
+                                Component = (
+                                    <el-input
+                                        type="number"
+                                        v-model={this.form.body[field.prop]}
+                                        {...compAttrs}
+                                    />
+                                )
+                                break
+
+                            case 'range':
+                                Component = (
+                                    <el-slider v-model={this.form.body[field.prop]} {...compAttrs} />
+                                )
+                                break
+
+                            case 'checkbox':
+                                Component = (
+                                    <el-checkbox v-model={this.form.body[field.prop]} {...compAttrs} />
+                                )
+                                break
+
+                            case 'switch':
+                            case 'toggle':
+                                Component = (
+                                    <el-switch v-model={this.form.body[field.prop]} {...compAttrs} />
+                                )
+                                break
+
+                            case 'radio':
+                                Component = (
+                                    <div>
+                                        {field.options.map(item => {
+                                            return (
+                                                <el-radio
+                                                    key={item.value}
+                                                    label={item.value}
+                                                    v-model={this.form.body[field.prop]}
+                                                    {...compAttrs}
+                                                >
+                                                    {item.label}
+                                                </el-radio>
+                                            )
+                                        })}
+                                    </div>
+                                )
+                                break
+                            case 'select-remote':
+                                Component = (
+                                    <el-select-remote
+                                        v-model={this.form.body[field.prop]}
+                                        url={field.url}
+                                        placeholder={field.placeholder}
+                                        autofill={true}
+                                        on-clear={() => this.onClearSelect(field, index)}
+                                    />
+                                )
+                                break
+                            case 'option':
+                            case 'select':
+                                Component = (
+                                    <el-select v-model={this.form.body[field.prop]} {...compAttrs}>
+                                        {field.options.map(item => {
+                                            return (
+                                                <el-option
+                                                    key={item.value}
+                                                    label={item.label}
+                                                    value={item.value}
+                                                ></el-option>
+                                            )
+                                        })}
+                                    </el-select>
+                                )
+                                // Component = <code-view content={compAttrs} />
+                                break
+                            default:
+                                Component = <div>---</div>
+                        }
+
+                        return (
+                            <el-form-item
+                                key={index}
+                                label={field.title}
+                                error={this.form.errors[field.prop]}
+                                prop={field.prop}
+                            >
+                                {Component}
+                            </el-form-item>
+                        )
+                    })}
+
+                    <el-form-item>
+                        <div>
+                            {this.reset && (
+                                <el-button on-click={this.handleReset}>
+                                    {this.resetText || 'Reset'}
+                                </el-button>
+                            )}
+                            {this.save && (
+                                <el-button
+                                    type="primary"
+                                    loading={this.form && this.form.loading}
+                                    on-click={this.handleClickSubmit}
+                                >
+                                    {this.saveText || 'Submit'}
+                                </el-button>
+                            )}
+                        </div>
+                    </el-form-item>
+                </el-form-wrapper>
+            )
         },
     }
 </script>

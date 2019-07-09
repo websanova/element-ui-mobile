@@ -1,72 +1,72 @@
-import Vue from "vue";
-import { storiesOf, addDecorator } from "@storybook/vue";
-import { text, boolean, number, select } from "@storybook/addon-knobs";
+import Vue from 'vue'
+import { storiesOf, addDecorator } from '@storybook/vue'
+import { text, boolean, number, select } from '@storybook/addon-knobs'
 
-import withBoxPage from "@/storybook/core/decorators/withBoxPage";
+import withBoxPage from '@/storybook/core/decorators/withBoxPage'
 
-const stories = storiesOf("UI|Select", module);
-stories.addDecorator(withBoxPage);
+const stories = storiesOf('UI|Select', module)
+stories.addDecorator(withBoxPage)
 
 export const TYPES = {
-    text: "text",
-    default: "default",
-    primary: "primary",
-    success: "success",
-    info: "info",
-    warning: "warning",
-    danger: "danger",
-};
+    text: 'text',
+    default: 'default',
+    primary: 'primary',
+    success: 'success',
+    info: 'info',
+    warning: 'warning',
+    danger: 'danger',
+}
 
 export const SIZES = {
-    medium: "medium",
-    small: "small",
-    mini: "mini",
-};
+    medium: 'medium',
+    small: 'small',
+    mini: 'mini',
+}
 
 const testOptions = [
     {
         value: 1,
-        label: "Option1",
+        label: 'Option1',
     },
     {
         value: 2,
-        label: "Option2",
+        label: 'Option2',
     },
     {
         value: 3,
-        label: "Option3",
+        label: 'Option3',
     },
     {
         value: 4,
-        label: "Option4",
+        label: 'Option4',
     },
     {
         value: 5,
-        label: "Option5",
+        label: 'Option5',
     },
-];
+]
 
 stories
 
-    .add("Overview", () => {
+    .add('Overview', () => {
         const substories = [
             {
-                title: "Basic",
-                mod: require("./basic").default,
-                source: require("!!raw-loader!./basic"),
+                title: 'Basic',
+                mod: require('./basic').default,
+                source: require('!!raw-loader!./basic'),
             },
-            {
-                title: "Plain",
-                mod: require("./plain").default,
-                source: require("!!raw-loader!./plain"),
-            },
-        ];
+            // {
+            //     title: "Plain",
+            //     mod: require("./plain").default,
+            //     source: require("!!raw-loader!./plain"),
+            // },
+        ]
 
         return {
             data() {
                 return {
                     substories,
-                };
+                }
             },
             template: `
         <div>
@@ -80,10 +80,10 @@ stories
             />
         </div>
         `,
-        };
+        }
     })
 
-    .add("Tester", () => {
+    .add('Tester', () => {
         return {
             components: {},
             props: {},
@@ -91,7 +91,7 @@ stories
                 return {
                     value: [],
                     options: testOptions,
-                };
+                }
             },
             template: `
         <div>
@@ -110,9 +110,9 @@ stories
             </el-select>
         </div>
         `,
-        };
+        }
     })
-    .add("Initial selection", () => {
+    .add('Initial selection', () => {
         return {
             components: {},
             props: {},
@@ -120,7 +120,7 @@ stories
                 return {
                     value: [1, 2],
                     options: testOptions,
-                };
+                }
             },
             template: `
         <div>
@@ -139,5 +139,5 @@ stories
             </el-select>
         </div>
         `,
-        };
-    });
+        }
+    })

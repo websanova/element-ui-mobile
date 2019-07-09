@@ -197,10 +197,7 @@
                     type: 'alert',
                     title: title || 'Alert',
                     class: 'el-dialog__wrapper el-dialog__wrapper--flex',
-                    customClass: `
-                                                                                                    el-dialog--system
-                                                                                                    el-dialog--alert
-                                                                                                `,
+                    customClass: ' el-dialog--system el-dialog--alert',
                     queue: true,
                     enterToClose: true,
                     showClose: false,
