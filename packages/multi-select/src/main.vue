@@ -81,7 +81,7 @@
                     :value="option[valueKey]"
                 >
                     <el-checkbox
-                        :value="itemSelected(option)"
+                        :value="selection[option[valueKey]] === true || allSelected"
                         @change="(v) => handleCheckboxChange(option, v)"
                     >{{ option[labelKey] }}</el-checkbox>
                 </li>
@@ -95,6 +95,7 @@
 </template>
 
 <script>
+    // @change="(v) => handleCheckboxChange(option, v)"
     function fuzzysearch(pattern, str) {
         const newPattern = pattern.split('').reduce((a, b) => `${a}.*${b}`)
         const result = new RegExp(pattern).test(str)
@@ -113,6 +114,7 @@
                 filteredOptions: null,
                 initialLoaded: false,
                 totalSelected: 0,
+                allSelected: false,
             }
         },
         props: {
@@ -187,13 +189,13 @@
             options(value) {
                 this.applySearch(this.searchValue)
             },
-            value(value) {
-                if (!value) return
+            // value(value) {
+            //     if (!value) return
 
-                if (this.multiselect) {
-                    this.update()
-                }
-            },
+            //     if (this.multiselect) {
+            //         // this.update()
+            //     }
+            // },
             searchValue(val) {
                 val = val.trim()
                 clearTimeout(this.changeTimeout)
@@ -228,19 +230,27 @@
                 const selection = this.getSelectionFromValue(this.value)
                 // this.$set(this, 'selection', selection)
                 this.selection = selection
+
                 this.updateLabel(this.value)
             },
             handleRadioChange(value) {
                 this.$emit('change', value)
             },
             handleCheckboxChange(option, value) {
-                if (this.noneAsAllSelected && this.totalSelected === 0) value = true
+                // if (this.noneAsAllSelected && this.totalSelected === 0) value = true
+
                 this.selection[option.value] = value
 
                 let values = this.getValuesFromSelection()
                 this.totalSelected = values.length
 
-                if (this.noneAsAllSelected && this.totalSelected >= this.options.length) {
+                if (this.totalSelected >= this.options.length) {
+                    this.allSelected = true
+                } else {
+                    this.allSelected = false
+                }
+
+                if (this.noneAsAllSelected && this.allSelected) {
                     values = []
                 }
 
@@ -251,7 +261,13 @@
                 let values = this.getValuesFromSelection()
                 this.totalSelected = values.length
 
-                if (this.noneAsAllSelected && this.totalSelected >= this.options.length) {
+                if (this.totalSelected >= this.options.length) {
+                    this.allSelected = true
+                } else {
+                    this.allSelected = false
+                }
+
+                if (this.noneAsAllSelected && this.allSelected) {
                     values = []
                 }
 
@@ -317,8 +333,8 @@
                     selection[item.value] = true
                 })
 
-                // this.$set(this, 'selection', selection)
-                this.selection = selection
+                this.$set(this, 'selection', selection)
+                // this.selection = selection
 
                 this.handleChange()
             },
@@ -328,8 +344,8 @@
                     this.filteredOptions.forEach(item => {
                         selection[item.value] = false
                     })
-                    this.selection = selection
-                    // this.$set(this, 'selection', selection)
+                    // this.selection = selection
+                    this.$set(this, 'selection', selection)
                     this.handleChange()
                     return
                 }

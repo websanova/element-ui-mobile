@@ -8,7 +8,7 @@
         :id="`pane-${paneName}`"
         :aria-labelledby="`tab-${paneName}`"
     >
-        <el-scrollbar class="el-scrollbar--fix">
+        <el-scrollbar v-if="scrollbar" class="el-scrollbar--fix">
             <div
                 class="el-tab-pane__body"
                 :class="{
@@ -18,6 +18,17 @@
                 <slot></slot>
             </div>
         </el-scrollbar>
+
+        <div
+            v-else
+            class="el-tab-pane__body"
+            :class="{
+                'is-pad': this.body.pad
+            }"
+        >
+            <slot></slot>
+        </div>
+
 
         <div class="el-tab-pane__footer"><slot name="footer"></slot></div>
     </div>
@@ -35,6 +46,7 @@
             closable: Boolean,
             disabled: Boolean,
             lazy: Boolean,
+            scrollbar: Boolean,
             body: {
                 type: Object,
                 default: () => {

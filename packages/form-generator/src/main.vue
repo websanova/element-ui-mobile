@@ -62,17 +62,18 @@
                 if (!field) {
                     throw new Error(`field ${prop} not found !`)
                 }
-                this.onChange({ prop, type: field.type }, value)
+                this.onChange(field, value)
             },
             onChange(field, value) {
-                const body = Object.assign({}, this.form.body)
+                // const body = Object.assign({}, this.form.body)
 
                 // if (field.type === "integer") {
                 //     value = parseInt(value, 10);
                 // }
 
-                body[field.prop] = value
-                this.form.body = body
+                this.form.body[field.prop] = value
+                // this.form.body = body
+                // debugger
                 this.$emit('change', this.form, field, value)
             },
             componentFromType(type) {
@@ -89,6 +90,8 @@
                 if (field.min !== undefined) attrs.min = field.min
                 if (field.step !== undefined) attrs.step = field.step
                 if (field.showWordLimit !== undefined) attrs.showWordLimit = field.showWordLimit
+                if (field.autofetch !== undefined) attrs.autofetch = field.autofetch
+                if (field.autofill !== undefined) attrs.autofill = field.autofill
 
                 return attrs
             },
@@ -230,7 +233,8 @@
                                         v-model={this.form.body[field.prop]}
                                         url={field.url}
                                         placeholder={field.placeholder}
-                                        autofill={true}
+                                        autofetch={field.autofetch}
+                                        autofill={field.autofill !== undefined ? field.autofill : true}
                                         on-clear={() => this.onClearSelect(field, index)}
                                     />
                                 )

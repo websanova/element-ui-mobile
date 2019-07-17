@@ -106,6 +106,7 @@
 
         .el-tab-pane__body {
             flex: 1;
+            width: 100%;
             // overflow: auto;
             @include when(pad) {
                 padding: 5px 10px;

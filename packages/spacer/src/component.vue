@@ -5,6 +5,7 @@
         props: {
             vertical: Boolean,
             flex: Boolean,
+            flexbox: Boolean,
             inlineFlex: Boolean,
             inline: Boolean,
             wrap: Boolean,
@@ -42,6 +43,7 @@
                         [`${styleId}`]: true,
                         [`${styleId}--vertical`]: this.vertical,
                         [`${styleId}--flex`]: this.flex,
+                        [`${styleId}--flexbox`]: this.flexbox,
                         [`${styleId}--inline-flex`]: this.inlineFlex,
                         [`${styleId}--inline`]: this.inline,
                         [`${styleId}--center`]: this.center,
