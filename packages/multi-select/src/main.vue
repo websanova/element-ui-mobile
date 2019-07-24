@@ -2,7 +2,7 @@
     <el-popover
         :width="width"
         popper-class="el-popover--multi-select el-popover--mobile-full"
-        placement="bottom-start"
+        :placement="placement"
         :popper-options="popperOptions"
     >
         <div
@@ -171,6 +171,10 @@
             valueKey: {
                 type: String,
                 default: 'value',
+            },
+            placement: {
+                type: String,
+                default: 'bottom-start',
             },
             popperOptions: {
                 type: Object,
