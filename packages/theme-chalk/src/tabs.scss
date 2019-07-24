@@ -62,7 +62,7 @@
     }
 
     .el-tabs__nav-wrap {
-        flex: 1;
+        // flex: 1;
         display: flex;
         @include when(scrollable) {
             padding: 0 19px;

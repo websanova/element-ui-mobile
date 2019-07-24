@@ -70,7 +70,7 @@
                 </ul>
             </el-radio-group>
 
-            <ul
+            <!-- <ul
                 v-if="multiselect"
                 :style="{width: (width - 9) + 'px'}"
                 class="el-multi-select__options"
@@ -85,16 +85,25 @@
                         @change="(v) => handleCheckboxChange(option, v)"
                     >{{ option[labelKey] }}</el-checkbox>
                 </li>
-            </ul>
-
-
+            </ul> -->
+            <multi-list
+                v-if="multiselect"
+                :width="width"
+                :filteredOptions="filteredOptions"
+                :selection="selection"
+                :valueKey="valueKey"
+                :labelKey="labelKey"
+                :allSelected="allSelected"
+                @change="handleCheckboxChange"
+            />
 
         </el-scrollbar>
-
     </el-popover>
 </template>
 
 <script>
+    import multiList from './list'
+
     // @change="(v) => handleCheckboxChange(option, v)"
     function fuzzysearch(pattern, str) {
         const newPattern = pattern.split('').reduce((a, b) => `${a}.*${b}`)
@@ -104,6 +113,7 @@
 
     export default {
         name: 'ElMultiSelect',
+        components: { multiList },
         data() {
             return {
                 currentValue: null,
@@ -210,11 +220,15 @@
                 return this.value
             },
             _label() {
-                if (this.multiselect) return this.label
+                // if (this.multiselect) return this.label
 
-                const item = this.options.find(item => item[this.valueKey] === this.value)
+                const item = this.options.find(item => {
+                    // console.log(item[this.valueKey] == this.value)
+                    return item[this.valueKey] == this.value
+                })
+                // console.log('item', item, this.value)
 
-                if (!item) return this.initialLabel
+                if (!item) return this.label
 
                 return item[this.labelKey]
             },
@@ -239,9 +253,10 @@
             handleCheckboxChange(option, value) {
                 // if (this.noneAsAllSelected && this.totalSelected === 0) value = true
 
-                this.selection[option.value] = value
+                this.selection[option[this.valueKey]] = value
 
                 let values = this.getValuesFromSelection()
+
                 this.totalSelected = values.length
 
                 if (this.totalSelected >= this.options.length) {
@@ -330,7 +345,7 @@
 
                 const selection = {}
                 this.filteredOptions.forEach(item => {
-                    selection[item.value] = true
+                    selection[item[this.valueKey]] = true
                 })
 
                 this.$set(this, 'selection', selection)
@@ -342,7 +357,7 @@
                 if (this.multiselect) {
                     const selection = {}
                     this.filteredOptions.forEach(item => {
-                        selection[item.value] = false
+                        selection[item[this.valueKey]] = false
                     })
                     // this.selection = selection
                     this.$set(this, 'selection', selection)
