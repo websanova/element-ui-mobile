@@ -57,16 +57,7 @@ $id: el-menu-simple;
         }
 
         .el-menu__item-toolbar {
-            // display: flex;
-            // align-items: center;
-            // margin-right: 3px;
-
-            /*>* {
-                margin-right: 8px;
-                &:last-child {
-                    margin-right: 0;
-                }
-            }*/
+            display: flex;
         }
     }
 
