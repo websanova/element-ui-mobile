@@ -8,9 +8,9 @@
         "url": "https://github.com/websanova/element-mobile"
     },
     "scripts": {
-        "serve-prod": "node serve-prod.js",
-        "storybook:build": "vue-cli-service storybook:build -s ./storybook/public -c storybook/config",
-        "storybook:serve": "vue-cli-service storybook:serve -s ./storybook/public -p 8083 -c storybook/config",
+        "prod": "node serve-prod.js",
+        "build": "vue-cli-service storybook:build -s ./storybook/public -c storybook/config",
+        "dev": "vue-cli-service storybook:serve -s ./storybook/public -p 8083 -c storybook/config",
         "test:e2e": "vue-cli-service test:e2e",
         "test:unit": "vue-cli-service test:unit"
     },
@@ -49,7 +49,7 @@
         "eslint": "^5.16.0",
         "eslint-plugin-vue": "^5.0.0",
         "html-loader": "^0.5.5",
-        "markdown-loader": "^5.0.0",
+        "markdown-loader": "^5.1.0",
         "sass": "^1.18.0",
         "sass-loader": "^7.1.0",
         "vue-awesome": "^3.5.1",
