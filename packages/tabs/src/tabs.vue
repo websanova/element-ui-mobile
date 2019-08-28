@@ -183,7 +183,7 @@
                     <div class="el-tabs__header--inner">
                         <tab-nav {...navData}>
                             <template slot="prefix">{this.$slots['nav-prefix']}</template>
-                            <template slot="suffix">{this.$slots['nav-suffix']}</template>
+                            <template slot="suffix">{this.$slots['nav-suffix']}{newButton}</template>
                         </tab-nav>
                         {(this.$slots.close) && (
                             <div class="el-tabs__toolbar">
@@ -238,9 +238,8 @@
                     {this.$slots.empty && (
                         <div class="el-tabs__content__empty">{this.$slots.empty || 'empty'}</div>
                     )}
-                    {(this.$slots.toolbar || newButton) && (
+                    {(this.$slots.toolbar) && (
                         <div class="el-tabs__footbar">
-                            {newButton}
                             {this.$slots.toolbar}
                         </div>
                     )}
