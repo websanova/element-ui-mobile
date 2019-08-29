@@ -154,6 +154,16 @@
 
                         let Component
 
+                        let disabled = false
+                        // if dependencies are not filled in yet render the field as disabled
+                        if (field.depends_on) {
+                            field.depends_on.forEach((dFieldName) => {
+                                if (this.form.body[dFieldName] === undefined || this.form.body[dFieldName] === null) {
+                                    compAttrs.attrs.disabled = true
+                                }
+                            })
+                        }
+
                         switch (field.type) {
                             case 'text':
                             case 'phone':
@@ -166,6 +176,7 @@
                                     <el-input
                                         type={field.type}
                                         v-model={this.form.body[field.prop]}
+                                        rows={field.rows}
                                         {...compAttrs}
                                     />
                                 )
@@ -187,6 +198,12 @@
                                         v-model={this.form.body[field.prop]}
                                         {...compAttrs}
                                     />
+                                )
+                                break
+
+                            case 'date':
+                                Component = (
+                                    <el-datepicker v-model={this.form.body[field.prop]} {...compAttrs} />
                                 )
                                 break
 
@@ -228,16 +245,71 @@
                                 )
                                 break
                             case 'select-remote':
+
+                                let allDepsResolved = null;
+                                let url = field.url;
+
+                                if (field.depends_on) {
+                                    allDepsResolved = true
+                                    field.depends_on.forEach((dFieldname, index) => {
+                                        if (this.form.body[dFieldname] === null || this.form.body[dFieldname] === undefined) {
+                                            allDepsResolved = false
+                                        }
+                                    })
+
+                                    if (allDepsResolved) {
+                                        field.depends_on.forEach((dFieldname, index) => {
+                                            url = url.replace(':' + dFieldname, this.form.body[dFieldname])
+                                        })
+                                    }
+
+                                }
+
+
                                 Component = (
                                     <el-select-remote
                                         v-model={this.form.body[field.prop]}
-                                        url={field.url}
+                                        fieldProp={field.prop}
+                                        url={url}
                                         placeholder={field.placeholder}
                                         autofetch={field.autofetch}
+                                        labelKey={field.labelKey}
+                                        subLabelKey={field.subLabelKey}
+                                        allowEmpty={field.allowEmpty}
+                                        emptyText={field.emptyText}
+                                        allDepsResolved={allDepsResolved}
                                         autofill={field.autofill !== undefined ? field.autofill : true}
                                         on-clear={() => this.onClearSelect(field, index)}
+                                        {...compAttrs}
                                     />
                                 )
+
+                                // Component = (
+                                //     <div>
+                                //     <el-select-remote
+                                //         v-model={this.form.body[field.prop]}
+                                //         fieldProp={field.prop}
+                                //         url={url}
+                                //         placeholder={field.placeholder}
+                                //         autofetch={field.autofetch}
+                                //         labelKey={field.labelKey}
+                                //         subLabelKey={field.subLabelKey}
+                                //         allowEmpty={field.allowEmpty}
+                                //         emptyText={field.emptyText}
+                                //         allDepsResolved={allDepsResolved}
+                                //         autofill={field.autofill !== undefined ? field.autofill : true}
+                                //         on-clear={() => this.onClearSelect(field, index)}
+                                //         {...compAttrs}
+                                //     />
+                                //     {this.form.body[field.prop] || '-'} - {JSON.stringify(field.depends_on)}
+                                //     { field.depends_on &&
+                                //         field.depends_on.map((dFieldname, index) => {
+                                //             return <span> {this.form.body[dFieldname]}</span>
+                                //         })
+                                //     } - {JSON.stringify(allDepsResolved)}
+                                //     </div>
+                                // )
+
                                 break
                             case 'option':
                             case 'select':
@@ -255,6 +327,19 @@
                                     </el-select>
                                 )
                                 // Component = <code-view content={compAttrs} />
+                                break
+                            case 'plaintext':
+                                Component = <div>{this.form.body[field.prop] || '-'}</div>
+                                break
+                            case 'status':
+
+                                if (this.form.body[field.prop] === 'active') {
+                                    Component = <div class="text-active">{this.form.body[field.prop] || '-'}</div>
+                                }else if (this.form.body[field.prop] === 'error') {
+                                    Component = <div class="text-error">{this.form.body[field.prop] || '-'}</div>
+                                }else {
+                                    Component = <div>{this.form.body[field.prop] || '-'}</div>
+                                }
                                 break
                             default:
                                 Component = <div>---</div>
