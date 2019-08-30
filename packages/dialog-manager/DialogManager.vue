@@ -174,12 +174,16 @@
                             footer: () => (
                                 <div>
                                     {opts.cancel && (
-                                        <el-button on-click={this.handleClose}>
+                                        <el-button
+                                            type={opts.cancelType || 'primary'}
+                                            class={opts.cancelClass}
+                                            on-click={this.handleClose}>
                                             {opts.cancelText || 'Cancel'}
                                         </el-button>
                                     )}
                                     <el-button
-                                        type="primary"
+                                        type={opts.saveType || 'primary'}
+                                        class={opts.saveClass}
                                         loading={this.form && this.form.loading}
                                         on-click={this.handleClickSubmit}
                                     >
