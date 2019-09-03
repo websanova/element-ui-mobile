@@ -5,6 +5,8 @@
             ['is-' + shadow + '-shadow']: shadow,
             'is-always-shadow': !shadow
         }"
+        v-bind="$attrs"
+        v-on="$listeners"
         >
         <div class="el-card--ext__header" v-if="$slots.title || title">
             <span class="el-card--ext__title">
@@ -32,6 +34,6 @@
             shadow: {
                 type: String,
             },
-        },
+        }
     }
 </script>

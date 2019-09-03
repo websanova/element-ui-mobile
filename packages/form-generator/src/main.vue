@@ -203,7 +203,11 @@
 
                             case 'date':
                                 Component = (
-                                    <el-datepicker v-model={this.form.body[field.prop]} {...compAttrs} />
+                                    <el-date-picker
+                                        v-model={this.form.body[field.prop]}
+                                        value-format={field['value-format']}
+                                        {...compAttrs}
+                                    />
                                 )
                                 break
 

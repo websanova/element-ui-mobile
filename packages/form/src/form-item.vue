@@ -142,7 +142,6 @@
                 if (path.indexOf(':') !== -1) {
                     path = path.replace(/:/, '.')
                 }
-
                 return getPropByPath(model, path, true).o[this.prop]
             },
             isRequired() {
