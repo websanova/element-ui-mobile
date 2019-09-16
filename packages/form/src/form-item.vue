@@ -142,7 +142,7 @@
                 if (path.indexOf(':') !== -1) {
                     path = path.replace(/:/, '.')
                 }
-                return getPropByPath(model, path, true).o[this.prop]
+                return getPropByPath(model, path, false).o[this.prop]
             },
             isRequired() {
                 let rules = this.getRules()
@@ -232,7 +232,7 @@
                     path = path.replace(/:/, '.')
                 }
 
-                let prop = getPropByPath(model, path, true)
+                let prop = getPropByPath(model, path, false)
 
                 if (Array.isArray(this.initialValue)) {
                     prop.o[prop.k] = [].concat(this.initialValue)
@@ -248,7 +248,7 @@
             },
             updateField() {
                 // set new initial value
-                let prop = getPropByPath(this.form.model, this.prop, true)
+                let prop = getPropByPath(this.form.model, this.prop, false)
                 let value = this.fieldValue
 
                 if (Array.isArray(value)) {
@@ -261,14 +261,14 @@
             },
             syncField() {
                 // set new initial value
-                let prop = getPropByPath(this.form.model, this.prop, true)
+                let prop = getPropByPath(this.form.model, this.prop, false)
             },
             getRules() {
                 let formRules = this.form.rules
                 const selfRules = this.rules
                 const requiredRule = this.required !== undefined ? { required: !!this.required } : []
 
-                const prop = getPropByPath(formRules, this.prop || '')
+                const prop = getPropByPath(formRules, this.prop || '', false)
                 formRules = formRules ? prop.o[this.prop || ''] || prop.v : []
 
                 return [].concat(selfRules || formRules || []).concat(requiredRule)
@@ -298,7 +298,7 @@
                 }
 
                 this.validate('change')
-                let prop = getPropByPath(this.form.model, this.prop, true)
+                let prop = getPropByPath(this.form.model, this.prop, false)
                 this.dispatch('ElForm', 'el.form.change', [this, prop.k, prop.v])
             },
         },

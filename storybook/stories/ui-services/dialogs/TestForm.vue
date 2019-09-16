@@ -13,7 +13,7 @@
 
 <script>
 
-import ElFormWrapper from '@websanova/element-ui-mobile/packages/form-wrapper'
+// import ElFormWrapper from '@websanova/element-ui-mobile/packages/form-wrapper'
 import MyForm from './Test';
 
 export default {
