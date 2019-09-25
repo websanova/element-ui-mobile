@@ -16,9 +16,9 @@
       <slot></slot>
       <transition name="el-zoom-in-top">
         <slot
-          v-if="validateState === 'error' && showMessage && form.showMessage"
+          v-if="(validateState === 'error' && showMessage) || error"
           name="error"
-          :error="validateMessage">
+          :error="validateMessage || error">
           <div
             class="el-form-item__error"
             :class="{
@@ -27,7 +27,7 @@
                 : (elForm && elForm.inlineMessage || false)
             }"
           >
-            {{validateMessage}}
+            {{validateMessage || error}}
           </div>
         </slot>
       </transition>
