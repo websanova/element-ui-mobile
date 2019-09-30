@@ -49,7 +49,7 @@
         >
 
             <el-radio-group
-                v-model="_value"
+                v-model="currentValue"
                 size="small"
                 @change="handleRadioChange"
                 v-if="!multiselect"
@@ -192,6 +192,8 @@
         created() {
             this.search = this.initialSearch
             this.label = this.initialLabel
+
+            this.currentValue = this.value
 
             if (this.multiselect && this.value) {
                 this.update()

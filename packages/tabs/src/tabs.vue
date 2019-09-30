@@ -117,6 +117,9 @@
                     changeCurrentName()
                 }
             },
+            onOrderChange(args) {
+                this.$emit('order', args)
+            }
         },
 
         render(h) {
@@ -181,7 +184,10 @@
             const header = (
                 <div class={['el-tabs__header', `is-${tabPosition}`]}>
                     <div class="el-tabs__header--inner">
-                        <tab-nav {...navData}>
+                        <tab-nav
+                            on-order={this.onOrderChange}
+                            {...navData}
+                        >
                             <template slot="prefix">{this.$slots['nav-prefix']}</template>
                             <template slot="suffix">{this.$slots['nav-suffix']}{newButton}</template>
                         </tab-nav>

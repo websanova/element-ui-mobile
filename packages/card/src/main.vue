@@ -2,6 +2,7 @@
     <div class="el-card--ext"
         :class="{
             'is-custom-scroll': scrollbar,
+            'is-scrollable': scrollable,
             ['is-' + shadow + '-shadow']: shadow,
             'is-always-shadow': !shadow
         }"
@@ -26,6 +27,7 @@
         name: 'ElCard',
         props: {
             title: String,
+            scrollable: Boolean,
             scrollbar: {
                 type: Boolean,
                 default: true,

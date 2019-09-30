@@ -1,5 +1,6 @@
 <script>
     import TabBar from "./tab-bar";
+    import draggable from 'vuedraggable'
     import {
         addResizeListener,
         removeResizeListener
@@ -14,7 +15,8 @@
         name: "TabNav",
 
         components: {
-            TabBar
+            TabBar,
+            draggable
         },
 
         inject: ["rootTabs"],
@@ -23,6 +25,7 @@
             panes: Array,
             currentName: String,
             editable: Boolean,
+            draggable: Boolean,
             onTabClick: {
                 type: Function,
                 default: noop
@@ -209,6 +212,9 @@
                 setTimeout(() => {
                     this.focusable = true;
                 }, 50);
+            },
+            onOrderChange(args) {
+                this.$emit('order', args)
             }
         },
 
@@ -277,6 +283,7 @@
                 return (
                     <div
                         class={{
+                            "draghandle": true,
                             "el-tabs__item": true,
                             [pane.itemClass]: pane.itemClass,
                             [`is-${this.rootTabs.tabPosition}`]: true,
@@ -348,7 +355,21 @@
                                 {this.$slots.prefix}
                             </span>
                             {!type ? <tab-bar tabs={panes} /> : null}
-                            {tabs}
+                            { draggable &&
+                                <draggable
+                                    tag="div"
+                                    list={panes}
+                                    handle=".draghandle"
+                                    on-change={this.onOrderChange}
+                                >
+                                    {tabs}
+                                </draggable>
+                            }
+                            { !draggable &&
+                                <div v-if="!draggable">
+                                    {tabs}
+                                </div>
+                            }
                             <span class="el-tabs__nav-suffix">
                                 {this.$slots.suffix}
                             </span>

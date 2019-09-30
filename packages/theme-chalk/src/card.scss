@@ -142,4 +142,9 @@
             overflow: hidden;
         }
     }
+    @include when(scrollable) {
+        @include e(body) {
+            overflow: auto;
+        }
+    }
 }

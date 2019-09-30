@@ -12,7 +12,7 @@
         v-on="$listeners"
     >
         <slot name="prefix"></slot>
-        <el-icon :name="icon" />
+        <el-icon :scale="scale" :name="icon" />
         <slot></slot>
     </a>
 </template>
@@ -21,6 +21,7 @@
     export default {
         name: 'ElIconbutton',
         props: {
+            scale: Number,
             icon: String,
             title: String,
             size: String,
