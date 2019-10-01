@@ -25,7 +25,7 @@
             panes: Array,
             currentName: String,
             editable: Boolean,
-            draggable: Boolean,
+            drag: Boolean,
             onTabClick: {
                 type: Function,
                 default: noop
@@ -355,7 +355,7 @@
                                 {this.$slots.prefix}
                             </span>
                             {!type ? <tab-bar tabs={panes} /> : null}
-                            { draggable &&
+                            { this.drag &&
                                 <draggable
                                     tag="div"
                                     list={panes}
@@ -365,8 +365,8 @@
                                     {tabs}
                                 </draggable>
                             }
-                            { !draggable &&
-                                <div v-if="!draggable">
+                            { !this.drag &&
+                                <div>
                                     {tabs}
                                 </div>
                             }

@@ -23,6 +23,8 @@
         v-bind:style="{
             maxWidth: this.width
         }"
+        v-bind="$attrs"
+        v-on="$listeners"
     >
         <slot></slot>
     </div>
