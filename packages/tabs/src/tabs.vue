@@ -13,6 +13,7 @@
             activeName: String,
             closable: Boolean,
             addable: Boolean,
+            drag: Boolean,
             mobileDropdown: Boolean,
             value: {},
             editable: Boolean,
@@ -134,6 +135,7 @@
                 addable,
                 tabPosition,
                 stretch,
+                drag,
             } = this
 
             const newButton =
@@ -160,6 +162,7 @@
                     editable,
                     type,
                     panes,
+                    drag,
                     stretch,
                     $slots: {
                         test: this.$slots.test,
