@@ -33,7 +33,10 @@
                 :command="option[valueKey]"
                 :class="{['el-dropdown-menu--select__' + option.type]: option.type}"
             >
-                {{ option[labelKey] }}
+                {{
+                    (option[labelI18nKey]) ?
+                    $t(option[labelI18nKey]) : option[labelKey]
+                }}
             </el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
@@ -60,6 +63,10 @@
             labelKey: {
                 type: String,
                 default: 'label',
+            },
+            labelI18nKey: {
+                type: String,
+                default: 't_label',
             },
 
             valueKey: {
@@ -93,6 +100,11 @@
 
         computed: {
             _label() {
+                const transLabel = (this.option || {})[this.labelI18nKey]
+                if (transLabel) {
+                    console.log('translabel', transLabel)
+                    return this.$t(transLabel)
+                }
                 return (this.option || {})[this.labelKey]
             },
         },

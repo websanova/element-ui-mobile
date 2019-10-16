@@ -1,6 +1,7 @@
 <template>
     <el-popover-original
         :popper-class="popperClass"
+        ref="popover"
         v-bind="$childAttrs"
         v-on="$listeners"
     >
@@ -52,6 +53,7 @@
                 },
             },
         },
+
         // data() {
         //     return {
         //         visible: false,
@@ -98,6 +100,10 @@
             //         console.log('onClickOutside')
             //         this.close();
             //     },
+            updatePopper() {
+
+                this.$refs.popover.$refs.popper.updatePopper();
+            },
             close() {
                 this.$emit('input', false)
             },

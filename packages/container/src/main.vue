@@ -14,6 +14,7 @@
             'is-scrolly': scrollY,
             'is-noshrink': shrink === false,
             'is-nogrow': grow === false,
+            'is-scrollable': scrollable === true,
         }"
     >
         <slot></slot>
@@ -33,6 +34,7 @@
             scroll: Boolean,
             scrollX: Boolean,
             scrollY: Boolean,
+            scrollable: Boolean,
             shrink: {
                 type: Boolean,
                 default: true,

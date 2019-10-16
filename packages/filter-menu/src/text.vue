@@ -1,7 +1,7 @@
 <template>
     <div class="el-filter-menu">
         <el-menu
-            :default-active="initialType"
+            :default-active="type"
             @select="handleSelect"
         >
             <el-menu-item
@@ -13,7 +13,7 @@
         <el-input
             type="text"
             placeholder="Filter Value..."
-            v-model.lazy="inputValue"
+            v-model="inputValue"
             clearable
         />
     </div>
@@ -22,7 +22,7 @@
 <script>
     import ElMultiSelect from '../../multi-select'
 
-    const filterOptions = [{ label: 'CONTAINS', value: '=' }, { label: 'EQUALS', value: '===' }]
+    const filterOptions = [{ label: 'CONTAINS', value: '=' }, { label: 'EQUALS', value: '=' }]
 
     export default {
         name: 'ElTextFilter',
@@ -36,11 +36,11 @@
                 type: Number,
                 default: 300,
             },
-            initialValue: {
+            value: {
                 type: String,
                 default: '',
             },
-            initialType: {
+            type: {
                 type: String,
                 default: '=',
             },
@@ -48,33 +48,35 @@
         data() {
             return {
                 inputValue: '', // input model
-                value: '', // final search value
-                type: '', // search type (from menu selection)
+                _value: '', // final search value
             }
         },
         watch: {
             inputValue: function(value) {
-                value = value.trim()
+                if (value) value = value.trim()
                 clearTimeout(this.changeTimeout)
                 this.changeTimeout = setTimeout(() => {
-                    if (value !== this.value) this.handleChange(value)
+                    if (value !== this._value) this.handleChange(value)
                 }, this.inputDelay)
             },
+            value() {
+                this._value = this.value
+                this.inputValue = this.value
+            }
         },
-        mounted() {
-            this.inputValue = this.initialValue
-            this.value = this.initialValue
-            this.type = this.initialType
+        created() {
+            this.inputValue = this.value
+            this._value = this.value
         },
         methods: {
             handleSelect(key) {
                 this.type = key
-                this.$emit('change', this.value, this.type)
+                this.$emit('change', this._value, this.type)
             },
             handleChange(value) {
                 clearTimeout(this.changeTimeout)
-                this.value = value
-                this.$emit('change', this.value, this.type)
+                this._value = value
+                this.$emit('change', this._value, this.type)
             },
         },
         beforeDestroy() {

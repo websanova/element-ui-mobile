@@ -58,4 +58,7 @@
     @include when(nogrow) {
         flex-grow: 0;
     }
+    @include when(scrollable) {
+        overflow: auto;
+    }
 }
