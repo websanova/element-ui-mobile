@@ -102,7 +102,6 @@
             _label() {
                 const transLabel = (this.option || {})[this.labelI18nKey]
                 if (transLabel) {
-                    console.log('translabel', transLabel)
                     return this.$t(transLabel)
                 }
                 return (this.option || {})[this.labelKey]

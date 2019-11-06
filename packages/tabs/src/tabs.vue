@@ -187,6 +187,12 @@
             const header = (
                 <div class={['el-tabs__header', `is-${tabPosition}`]}>
                     <div class="el-tabs__header--inner">
+                        {(this.$slots.closePrefix) && (
+
+                                this.$slots.closePrefix
+
+                        )}
+
                         <tab-nav
                             on-order={this.onOrderChange}
                             {...navData}
