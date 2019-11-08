@@ -26,12 +26,15 @@
                 <div class="el-multi-select__toolbar-spacer"></div>
                 <el-button
                     type="text"
+                    v-if="clearable"
                     @click="this.deselectAll"
                 >Clear all</el-button>
             </div>
-            <div class="el-multi-select__toolbar" v-if="!multiselect">
+            <div class="el-multi-select__toolbar" v-if="!multiselect && (clearable || title)">
+                <span class="el-multi-select__toolbar_title" v-if="title">{{title}}</span>
                 <div class="el-multi-select__toolbar-spacer"></div>
                 <el-button
+                    v-if="clearable"
                     type="text"
                     @click="this.deselectAll"
                 >Clear</el-button>
@@ -125,13 +128,28 @@
                 initialLoaded: false,
                 totalSelected: 0,
                 allSelected: false,
+
             }
         },
         props: {
             value: null,
-            multiselect: false,
-            searchEnabled: true,
-            noneAsAllSelected: false,
+            multiselect: {
+                type: Boolean,
+                default: false
+            },
+            clearable: {
+                type: Boolean,
+                default: true
+            },
+            title: String,
+            searchEnabled:  {
+                type: Boolean,
+                default: true
+            },
+            noneAsAllSelected:  {
+                type: Boolean,
+                default: false
+            },
             options: {
                 type: Array,
                 default() {

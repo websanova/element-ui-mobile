@@ -12,7 +12,7 @@
                 name="label"
             >
                 <span>
-                    {{ _label }}
+                    {{ label || _label }}
                 </span>
 
                 <el-icon
@@ -52,6 +52,7 @@
             value: {},
 
             options: Array,
+            label: String,
 
             menuClass: String,
 

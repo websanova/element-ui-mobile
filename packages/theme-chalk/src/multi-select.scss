@@ -64,6 +64,11 @@
         }
     }
 
+    @include e(toolbar_title) {
+        margin-bottom: 3px;
+    }
+
+
     @include e(notfound) {
         text-align: center;
         padding: 10px 10px;
