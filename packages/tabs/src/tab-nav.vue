@@ -361,6 +361,7 @@
                                     list={panes}
                                     handle=".draghandle"
                                     on-change={this.onOrderChange}
+                                    animation={500}
                                 >
                                     {tabs}
                                 </draggable>

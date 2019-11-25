@@ -35,7 +35,7 @@
                 type: String,
                 default: 'hasOverlay',
             },
-            popperClass: String,
+            popperClass: null,
             iconClose: {
                 type: String,
                 default: 'times',
