@@ -372,12 +372,14 @@
                                     console.warn('VNode is not supported by DialogManager for forms')
                                 }
                             } else if (dialog.mode === 'form') {
+                                let listeners = dialog.on || {}
                                 const attrs = {
                                     on: {
                                         created: this.handleFormCreated,
                                         submit: this.handleFormSubmit,
                                         success: this.handleFormSuccess,
                                         error: this.handleFormError,
+                                        ...listeners
                                     },
                                     props: dialog.props || {},
                                 }
@@ -387,6 +389,7 @@
                                 message = this.$createElement(message, attrs)
                             } else {
                                 const attrs = {
+                                    on: dialog.on,
                                     props: dialog.props || {},
                                 }
 
