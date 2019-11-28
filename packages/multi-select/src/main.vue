@@ -10,14 +10,10 @@
             slot="reference"
         >
             <span>{{_label}}</span>
-            <el-icon name="light/caret-down" />
+            <el-icon name="light/chevron-down" scale=".7" />
         </div>
         <div class="el-multi-select__header">
-            <el-input
-                v-if="searchEnabled"
-                placeholder="Search..."
-                v-model="searchValue"
-            />
+
             <div class="el-multi-select__toolbar" v-if="multiselect">
                 <el-button
                     type="text"
@@ -40,6 +36,13 @@
                 >Clear</el-button>
             </div>
         </div>
+
+        <el-input
+            v-if="searchEnabled"
+            placeholder="Search..."
+            v-model="searchValue"
+            class="el-multi-select__search-input"
+        />
 
         <div
             class="el-multi-select__notfound"
