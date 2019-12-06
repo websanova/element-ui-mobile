@@ -1,7 +1,7 @@
 <template>
     <el-popover
         :width="width"
-        popper-class="el-popover--multi-select el-popover--mobile-full"
+        :popper-class="'el-popover--multi-select el-popover--mobile-full ' + popperClass"
         :placement="placement"
         :popper-options="popperOptions"
     >
@@ -135,6 +135,7 @@
             }
         },
         props: {
+            popperClass: String,
             value: null,
             multiselect: {
                 type: Boolean,
