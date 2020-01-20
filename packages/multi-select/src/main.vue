@@ -324,6 +324,11 @@
             handleClose() {},
             getSelectionFromValue(value) {
                 const sel = {}
+
+                if (!Array.isArray(value)) {
+                    value = [value]
+                }
+
                 value.forEach(t => {
                     sel[t] = true
                 })

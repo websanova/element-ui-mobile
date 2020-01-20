@@ -115,9 +115,9 @@
                 if (this.form.labelPosition === 'top' || this.form.inline) return ret
                 if (!label && !this.labelWidth && this.isNested) return ret
                 const labelWidth = this.labelWidth || this.form.labelWidth
-                if (labelWidth) {
+                /*if (labelWidth) {
                     ret.marginLeft = labelWidth
-                }
+                }*/
                 return ret
             },
             form() {

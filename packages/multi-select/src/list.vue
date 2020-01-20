@@ -10,15 +10,20 @@
         render(createElement) {
             const { width, filteredOptions, valueKey, labelKey, selection, allSelected } = this
 
-            // if (!multiselect) {
 
-            // }
 
             return (
                 <ul style={{ width: width - 9 + 'px' }} class="el-multi-select__options">
-                    {filteredOptions.map(option => {
+                    {filteredOptions.map((option, i) => {
+                        let props = {}
+                        if (option.color) {
+                            props.style = { '--color': option.color || 'unset' }
+                        }
+                        if (option.style) props.style = option.style
+                        if (option.class) props.class = option.class
+
                         return (
-                            <li key={option[valueKey]} value={option[valueKey]}>
+                            <li key={option[valueKey]} value={option[valueKey]} {...props}>
                                 <el-checkbox
                                     value={selection[option[valueKey]] === true || allSelected}
                                     on-change={v => this.handleCheckboxChange(option, v)}
