@@ -77,7 +77,8 @@
             {{selectedLabel || '---'}}
         </span>
         <el-icon
-            name="light/caret-down"
+            name="light/chevron-down"
+            :scale=".7"
         ></el-icon>
     </div>
     <el-input
@@ -209,8 +210,8 @@
                 return this.remote && this.filterable
                     ? ''
                     : this.visible
-                    ? 'arrow-up is-reverse'
-                    : 'arrow-up'
+                    ? 'chevron-up is-reverse'
+                    : 'chevron-up'
             },
 
             debounce() {

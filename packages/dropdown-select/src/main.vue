@@ -16,7 +16,8 @@
                 </span>
 
                 <el-icon
-                    name="light/caret-down"
+                    name="light/chevron-down"
+                    :scale=".7"
                 ></el-icon>
             </slot>
         </span>
