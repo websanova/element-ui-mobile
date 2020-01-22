@@ -97,7 +97,7 @@
       :class="{ 'is-focus': visible }"
       @focus="handleFocus"
       @blur="handleBlur"
-      @keyup.native="debouncedOnInputChange"
+      @input.native="debouncedOnInputChange"
       @keydown.native.down.stop.prevent="navigateOptions('next')"
       @keydown.native.up.stop.prevent="navigateOptions('prev')"
       @keydown.native.enter.prevent="selectOption"
@@ -807,6 +807,9 @@
             },
 
             onInputChange() {
+                if(!this.selectedLabel) {
+                    this.visible = false
+                }
                 if (this.filterable && this.query !== this.selectedLabel) {
                     this.query = this.selectedLabel
                     this.handleQueryChange(this.query)
@@ -879,7 +882,8 @@
                 this.$emit('input', '')
             }
 
-            this.debouncedOnInputChange = debounce(this.debounce, () => {
+            this.debouncedOnInputChange = debounce(this.debounce, (ev) => {
+                this.selectedLabel = ev.target.value
                 this.onInputChange()
             })
 
