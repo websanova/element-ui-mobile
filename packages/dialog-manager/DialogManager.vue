@@ -366,8 +366,10 @@
                         model.ref = 'form'
                         message = this.$createElement(message[0], model)
                     } else {
+
                         if (typeof message === 'object') {
-                            if (message.componentOptions && message.context) {
+                            console.log('typeof message', typeof message, message.componentOptions, message.context)
+                            if (message.context) {
                                 if (dialog.mode === 'form') {
                                     console.warn('VNode is not supported by DialogManager for forms')
                                 }
