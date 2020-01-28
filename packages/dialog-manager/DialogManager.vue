@@ -368,7 +368,6 @@
                     } else {
 
                         if (typeof message === 'object') {
-                            console.log('typeof message', typeof message, message.componentOptions, message.context)
                             if (message.context) {
                                 if (dialog.mode === 'form') {
                                     console.warn('VNode is not supported by DialogManager for forms')
