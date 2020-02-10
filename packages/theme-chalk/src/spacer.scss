@@ -71,16 +71,21 @@ $id: el-spacer;
         }
     }
 
-    &--size-md,
-    &--vertical {
+    &--size-sm {
+        > * {
+            margin-right: .5em;
+            margin-bottom: 0;
+        }
+    }
+
+    &--size-md {
         > * {
             margin-right: 1em;
             margin-bottom: 0;
         }
     }
 
-    &--size-lg,
-    &--vertical {
+    &--size-lg {
         > * {
             margin-right: 1.5em;
             margin-bottom: 0;
@@ -102,16 +107,21 @@ $id: el-spacer;
         }
     }
 
-    &--size-md,
-    &--vertical {
+    &--size-sm.#{$id}--vertical {
+        > * {
+            margin-bottom: .5em;
+            margin-right: 0;
+        }
+    }
+
+    &--size-md.#{$id}--vertical {
         > * {
             margin-bottom: 1em;
             margin-right: 0;
         }
     }
 
-    &--size-lg,
-    &--vertical {
+    &--size-lg.#{$id}--vertical {
         > * {
             margin-bottom: 1.5em;
             margin-right: 0;

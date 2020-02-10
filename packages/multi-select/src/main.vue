@@ -54,12 +54,12 @@
             class="el-scrollbar--fix"
         >
 
-            <el-radio-group
-                v-model="currentValue"
+            <!-- <el-radio-group
+                :value="currentValue"
                 size="small"
                 @change="handleRadioChange"
                 v-if="!multiselect"
-            >
+            > -->
                 <ul
                     :style="{width: (width - 9) + 'px'}"
                     class="el-multi-select__options"
@@ -67,14 +67,15 @@
                     <li
                         v-for="option in filteredOptions"
                         :key="option[valueKey]"
-                        :value="option[valueKey]"
                     >
                         <el-radio
+                            v-model="currentValue"
                             :label="option[valueKey]"
+                            @change="handleRadioChange"
                         >{{ option[labelKey] }}</el-radio>
                     </li>
                 </ul>
-            </el-radio-group>
+            <!-- </el-radio-group> -->
 
             <!-- <ul
                 v-if="multiselect"
@@ -227,13 +228,11 @@
             options(value) {
                 this.applySearch(this.searchValue)
             },
-            // value(value) {
-            //     if (!value) return
-
-            //     if (this.multiselect) {
-            //         // this.update()
-            //     }
-            // },
+            value(value) {
+                if (!value) return
+                this.applySearch(this.searchValue)
+                this.update()
+            },
             searchValue(val) {
                 val = val.trim()
                 clearTimeout(this.changeTimeout)
@@ -241,12 +240,12 @@
                     if (val !== this.search) this.handleSearch(val)
                 }, this.inputDelay)
             },
+            currentValue(value) {
+                console.log('currentValue', value)
+                this.$emit('change', value)
+            }
         },
         computed: {
-            _value() {
-                if (!this.multiselect) return this.currentValue
-                return this.value
-            },
             _label() {
                 // if (this.multiselect) return this.label
 
@@ -259,7 +258,7 @@
                 if (!item) return this.label
 
                 return item[this.labelKey]
-            },
+            }
         },
         methods: {
             itemSelected(option) {
@@ -276,10 +275,13 @@
                 this.updateLabel(this.value)
             },
             handleRadioChange(value) {
+                console.log('handleRadioChange', value, this.currentValue)
+                this.currentValue = value
                 this.$emit('change', value)
             },
             handleCheckboxChange(option, value) {
                 // if (this.noneAsAllSelected && this.totalSelected === 0) value = true
+                console.log('handleCheckboxChange', value)
 
                 this.selection[option[this.valueKey]] = value
 
@@ -399,7 +401,6 @@
                 }
 
                 this.currentValue = null
-                this.handleRadioChange()
             },
         },
 
