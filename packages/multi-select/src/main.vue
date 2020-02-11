@@ -241,7 +241,6 @@
                 }, this.inputDelay)
             },
             currentValue(value) {
-                console.log('currentValue', value)
                 this.$emit('change', value)
             }
         },
@@ -275,13 +274,11 @@
                 this.updateLabel(this.value)
             },
             handleRadioChange(value) {
-                console.log('handleRadioChange', value, this.currentValue)
                 this.currentValue = value
                 this.$emit('change', value)
             },
             handleCheckboxChange(option, value) {
                 // if (this.noneAsAllSelected && this.totalSelected === 0) value = true
-                console.log('handleCheckboxChange', value)
 
                 this.selection[option[this.valueKey]] = value
 
