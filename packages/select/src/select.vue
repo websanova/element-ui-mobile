@@ -763,6 +763,9 @@
             },
 
             toggleMenu() {
+                // don't toggle menu if already focused
+                if (this.visible) return
+
                 if (!this.selectDisabled) {
                     if (this.menuVisibleOnFocus) {
                         this.menuVisibleOnFocus = false
