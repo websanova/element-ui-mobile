@@ -71,7 +71,6 @@
                         <el-radio
                             v-model="currentValue"
                             :label="option[valueKey]"
-                            @change="handleRadioChange"
                         >{{ option[labelKey] }}</el-radio>
                     </li>
                 </ul>
@@ -275,10 +274,12 @@
             },
             handleRadioChange(value) {
                 this.currentValue = value
+                console.log('handleRadioChange', value, this.currentValue)
                 this.$emit('change', value)
             },
             handleCheckboxChange(option, value) {
                 // if (this.noneAsAllSelected && this.totalSelected === 0) value = true
+                console.log('handleCheckboxChange', value)
 
                 this.selection[option[this.valueKey]] = value
 
