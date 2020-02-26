@@ -13,6 +13,7 @@
             activeName: String,
             closable: Boolean,
             addable: Boolean,
+            shareable: Boolean,
             drag: Boolean,
             mobileDropdown: Boolean,
             value: {},
@@ -98,6 +99,9 @@
                 this.$emit('edit', null, 'add')
                 this.$emit('tab-add')
             },
+            handleTabShare() {
+                this.$emit('tab-share')
+            },
             setCurrentName(value) {
                 const changeCurrentName = () => {
                     this.currentName = value + ''
@@ -129,10 +133,12 @@
                 handleTabClick,
                 handleTabRemove,
                 handleTabAdd,
+                handleTabShare,
                 currentName,
                 panes,
                 editable,
                 addable,
+                shareable,
                 tabPosition,
                 stretch,
                 drag,
@@ -151,6 +157,22 @@
                         }}
                     >
                         {this.$slots['new-tab'] || <i class="el-icon-plus" />}
+                    </span>
+                ) : null
+
+            const shareButton =
+                shareable ? (
+                    <span
+                        class="el-tabs__new-tab"
+                        on-click={handleTabShare}
+                        tabindex="0"
+                        on-keydown={ev => {
+                            if (ev.keyCode === 13) {
+                                handleTabShare()
+                            }
+                        }}
+                    >
+                        {this.$slots['share-tab'] || <i class="el-icon-share" />}
                     </span>
                 ) : null
 
@@ -198,7 +220,7 @@
                             {...navData}
                         >
                             <template slot="prefix">{this.$slots['nav-prefix']}</template>
-                            <template slot="suffix">{this.$slots['nav-suffix']}{newButton}</template>
+                            <template slot="suffix">{this.$slots['nav-suffix']}{shareButton}{newButton}</template>
                         </tab-nav>
                         {(this.$slots.close) && (
                             <div class="el-tabs__toolbar">
