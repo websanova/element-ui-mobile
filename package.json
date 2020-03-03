@@ -2,7 +2,7 @@
     "name": "@websanova/element-ui-mobile",
     "description": "Mobile extensions for element-ui",
     "licenses": "MIT, GPL",
-    "version": "0.2.36",
+    "version": "0.2.37",
     "repository": {
         "type": "git",
         "url": "https://github.com/websanova/element-mobile"
@@ -51,7 +51,7 @@
         "markdown-loader": "^5.1.0",
         "sass": "^1.18.0",
         "sass-loader": "^7.1.0",
-        "vue-awesome": "^3.5.1",
+        "vue-awesome": "^4.0.2",
         "vue-cli-plugin-storybook": "^0.6.1",
         "vue-codemirror": "^4.0.6",
         "vue-markdown": "^2.2.4",
